@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package shared.model.routes;
+
+option go_package = "github.com/rhino1998/programme/backend/lib/model/routes";
+
+enum TravelMethod { Walking = 0; Biking = 1; Rideshare = 2; Car = 3; }
+
+message Location {
+  string name = 1;
+  // Coord coords = 2;
+}
+
+message Trip {
+  Location start = 1;
+  Location end = 2;
+  TravelMethod method = 3;
+  int64 duration = 4;
+}

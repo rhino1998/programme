@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package shared.model.schedule;
+
+import "shared/model/routes/routes.proto";
+
+option go_package = "github.com/rhino1998/programme/backend/lib/model/schedule";
+
+message Day {
+  // optional  Weather weather = 1;
+
+  int64 datetime = 1; // start of day
+  repeated Task tasks = 2;
+
+  oneof weather {
+    bool weather_null = 12;
+    // Weather weather_value =13;
+  }
+
+  oneof traffic {
+    bool traffic_null = 14;
+    // Traffic  traffic_value =15;
+  }
+}
+
+message Task {
+  string name = 1;
+  int64 duration = 2;
+  int64 stress = 3;
+
+  // Coord location = 4;
+
+  oneof location {
+    bool location_null = 14;
+    shared.model.routes.Location location_value = 15;
+  }
+}
