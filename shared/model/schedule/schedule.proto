@@ -23,10 +23,15 @@ message Day {
   }
 }
 
+enum TaskType {
+  Unknown = 0; Floating = 1; Scheduled = 2; Calendar = 3; Free = 4; Travel = 5;
+}
+
 message Task {
-  string name = 1;
-  int64 duration = 2;
-  int64 stress = 3;
+  TaskType task_type = 1;
+  string name = 2;
+  int64 duration = 3;
+  int64 stress = 4;
 
   // Coord location = 4;
 
