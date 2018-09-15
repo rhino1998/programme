@@ -4,6 +4,10 @@ package shared.model.weather;
 
 option go_package = "github.com/rhino1998/programme/backend/lib/model/weather";
 
+service WeatherAPI {
+  rpc GetForecast (Coord) returns (Forecast);
+}
+
 // Geo location of city
 message Coord {
   double longitude = 1;
@@ -25,7 +29,6 @@ message Main {
   double sea_level = 5;    // Atmospheric pressure on the sea level (hPa)
   double ground_level = 6; // Atmospheric pressure on the ground level (hPa)
   int64 humidity = 7;
-  int64 temp_kf = 8;
 }
 
 // Mainly use id from this, can
