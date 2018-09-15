@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'programme',
-      home: RandomWords(),
+      home: TaskListPage(),
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.white,
@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class RandomWords extends StatefulWidget {
+class TaskListPage extends StatefulWidget {
   @override
-  RandomWordsState createState() => new RandomWordsState();
+  TaskListPageState createState() => new TaskListPageState();
 }
 
-class RandomWordsState extends State<RandomWords> {
+class TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +54,11 @@ class RandomWordsState extends State<RandomWords> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: new TaskList(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(),
+        child: Icon(Icons.add),
+        onPressed: ()=>null,
+      ),
     );
   }
 }

@@ -62,7 +62,7 @@ class TaskListState extends State<TaskList> {
 
   TaskListState() {
     for (int i = rng.nextInt(5) + 3; i >= 0; i--) {
-      days.add(new Day());
+      days.add(Day());
     }
   }
 
@@ -73,7 +73,7 @@ class TaskListState extends State<TaskList> {
         (l, day) =>
             l +
             ((day.tasks.length == 0) ? [] : [new DayRow(day)]) +
-            day.tasks.map((task) => new TaskRow(task)).toList());
+            day.tasks.map((task) => new TaskRow(task)).toList()) + List.generate(5, (_)=>ListTile());
     return ListView.builder(
       padding: const EdgeInsets.all(0.0),
       itemCount: rows.length,
