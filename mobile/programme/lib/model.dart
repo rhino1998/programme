@@ -43,6 +43,7 @@ class ScheduledTask {
   int stress = 0;
   DateTime start;
   DateTime end;
+  bool travel = rng.nextBool();
 
   ScheduledTask(this.start, this.end) {
     this.name = WordPair.random().asPascalCase;

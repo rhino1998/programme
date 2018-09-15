@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 
 import "shared/ui/floating.dart";
+import "shared/ui/google.dart";
 
 void main() => runApp(MyApp());
 
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
       home: TaskListPage(),
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: Colors.white,
-        accentColor: Colors.deepPurple,
+        primaryColor: Colors.grey.shade300,
+        scaffoldBackgroundColor: Colors.grey.shade300,
+        accentColor: GoogleColors.blue,
         primaryIconTheme: IconThemeData(
           color: Colors.black,
         ),

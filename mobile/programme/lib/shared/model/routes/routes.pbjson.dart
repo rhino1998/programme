@@ -7,10 +7,19 @@
 const TravelMethod$json = const {
   '1': 'TravelMethod',
   '2': const [
-    const {'1': 'Walking', '2': 0},
-    const {'1': 'Biking', '2': 1},
-    const {'1': 'Rideshare', '2': 2},
-    const {'1': 'Car', '2': 3},
+    const {'1': 'Unknown', '2': 0},
+    const {'1': 'Walking', '2': 1},
+    const {'1': 'Biking', '2': 2},
+    const {'1': 'Rideshare', '2': 3},
+    const {'1': 'Car', '2': 4},
+  ],
+};
+
+const Coords$json = const {
+  '1': 'Coords',
+  '2': const [
+    const {'1': 'Latitude', '3': 1, '4': 1, '5': 1, '10': 'Latitude'},
+    const {'1': 'Longitude', '3': 2, '4': 1, '5': 1, '10': 'Longitude'},
   ],
 };
 
@@ -18,6 +27,7 @@ const Location$json = const {
   '1': 'Location',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'coords', '3': 2, '4': 1, '5': 11, '6': '.shared.model.routes.Coords', '10': 'coords'},
   ],
 };
 

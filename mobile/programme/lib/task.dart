@@ -5,9 +5,8 @@ import 'day.dart';
 import 'model.dart';
 
 import 'shared/ui/icon.dart';
-import 'shared/ui/floating.dart';
-
-var timeFormat = DateFormat('hh:mm a');
+import 'shared/ui/google.dart';
+import 'shared/ui/timeformat.dart';
 
 class TaskList extends StatefulWidget {
   @override
@@ -109,15 +108,7 @@ class TaskRowState extends State<TaskRow> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Container(
-          constraints: BoxConstraints.expand(
-            height: 56.0,
-            width: 10.0,
-          ),
-          decoration: BoxDecoration(
-            color: this.taskListStressBarColor(),
-          ),
-        ),
+        rectangle(height:56.0, width:10.0, color: stressColor(_task.stress)),
         Padding(
           padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
           child: Text(
@@ -140,16 +131,5 @@ class TaskRowState extends State<TaskRow> {
         ),
       ],
     );
-  }
-
-  Color taskListStressBarColor() {
-    if (_task.stress <= 3) {
-      return Colors.green;
-    } else if (_task.stress <= 5) {
-      return Colors.yellow;
-    }else if (_task.stress <= 7){
-      return Colors.orange;
-    }
-    return Colors.red;
   }
 }

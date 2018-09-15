@@ -9,12 +9,14 @@ import 'dart:core' show int, dynamic, String, List, Map;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class TravelMethod extends $pb.ProtobufEnum {
-  static const TravelMethod Walking = const TravelMethod._(0, 'Walking');
-  static const TravelMethod Biking = const TravelMethod._(1, 'Biking');
-  static const TravelMethod Rideshare = const TravelMethod._(2, 'Rideshare');
-  static const TravelMethod Car = const TravelMethod._(3, 'Car');
+  static const TravelMethod Unknown = const TravelMethod._(0, 'Unknown');
+  static const TravelMethod Walking = const TravelMethod._(1, 'Walking');
+  static const TravelMethod Biking = const TravelMethod._(2, 'Biking');
+  static const TravelMethod Rideshare = const TravelMethod._(3, 'Rideshare');
+  static const TravelMethod Car = const TravelMethod._(4, 'Car');
 
   static const List<TravelMethod> values = const <TravelMethod> [
+    Unknown,
     Walking,
     Biking,
     Rideshare,

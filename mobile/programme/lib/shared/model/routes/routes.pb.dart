@@ -14,9 +14,42 @@ import 'routes.pbenum.dart';
 
 export 'routes.pbenum.dart';
 
+class Coords extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Coords', package: const $pb.PackageName('shared.model.routes'))
+    ..a<double>(1, 'latitude', $pb.PbFieldType.OD)
+    ..a<double>(2, 'longitude', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Coords() : super();
+  Coords.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Coords.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Coords clone() => new Coords()..mergeFromMessage(this);
+  Coords copyWith(void Function(Coords) updates) => super.copyWith((message) => updates(message as Coords));
+  $pb.BuilderInfo get info_ => _i;
+  static Coords create() => new Coords();
+  static $pb.PbList<Coords> createRepeated() => new $pb.PbList<Coords>();
+  static Coords getDefault() => _defaultInstance ??= create()..freeze();
+  static Coords _defaultInstance;
+  static void $checkItem(Coords v) {
+    if (v is! Coords) $pb.checkItemFailed(v, _i.messageName);
+  }
+
+  double get latitude => $_getN(0);
+  set latitude(double v) { $_setDouble(0, v); }
+  bool hasLatitude() => $_has(0);
+  void clearLatitude() => clearField(1);
+
+  double get longitude => $_getN(1);
+  set longitude(double v) { $_setDouble(1, v); }
+  bool hasLongitude() => $_has(1);
+  void clearLongitude() => clearField(2);
+}
+
 class Location extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Location', package: const $pb.PackageName('shared.model.routes'))
     ..aOS(1, 'name')
+    ..a<Coords>(2, 'coords', $pb.PbFieldType.OM, Coords.getDefault, Coords.create)
     ..hasRequiredFields = false
   ;
 
@@ -38,13 +71,18 @@ class Location extends $pb.GeneratedMessage {
   set name(String v) { $_setString(0, v); }
   bool hasName() => $_has(0);
   void clearName() => clearField(1);
+
+  Coords get coords => $_getN(1);
+  set coords(Coords v) { setField(2, v); }
+  bool hasCoords() => $_has(1);
+  void clearCoords() => clearField(2);
 }
 
 class Trip extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Trip', package: const $pb.PackageName('shared.model.routes'))
     ..a<Location>(1, 'start', $pb.PbFieldType.OM, Location.getDefault, Location.create)
     ..a<Location>(2, 'end', $pb.PbFieldType.OM, Location.getDefault, Location.create)
-    ..e<TravelMethod>(3, 'method', $pb.PbFieldType.OE, TravelMethod.Walking, TravelMethod.valueOf, TravelMethod.values)
+    ..e<TravelMethod>(3, 'method', $pb.PbFieldType.OE, TravelMethod.Unknown, TravelMethod.valueOf, TravelMethod.values)
     ..aInt64(4, 'duration')
     ..hasRequiredFields = false
   ;

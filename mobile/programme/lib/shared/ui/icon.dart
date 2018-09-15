@@ -3,38 +3,31 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import 'google.dart';
+
 CircleAvatar scoreIcon(int score, {double radius}) {
-  if (score < 3000) {
+  if (score < 4000) {
     return CircleAvatar(
       radius: radius,
-      backgroundColor: Colors.green,
+      backgroundColor: GoogleColors.green,
       child: new Icon(
         MdiIcons.emoticonHappy,
         color: Colors.white,
       ),
     );
-  } else if (score < 6000) {
+  } else if (score < 8000) {
     return CircleAvatar(
       radius: radius,
-      backgroundColor: Colors.yellow,
+      backgroundColor: GoogleColors.yellow,
       child: new Icon(
         MdiIcons.emoticonNeutral,
-        color: Colors.white,
-      ),
-    );
-  } else if (score < 9000) {
-    return CircleAvatar(
-      radius: radius,
-      backgroundColor: Colors.orange,
-      child: new Icon(
-        MdiIcons.emoticonSad,
         color: Colors.white,
       ),
     );
   }
   return CircleAvatar(
     radius: radius,
-    backgroundColor: Colors.red,
+    backgroundColor: GoogleColors.red,
     child: new Icon(
       MdiIcons.emoticonDead,
       color: Colors.white,
@@ -53,4 +46,42 @@ Widget blurChip(Widget widget, {double radius}) {
       ),
     ),
   );
+}
+
+Widget rectangle(
+    {width: 0.0, height: 0.0, Color color, BorderRadius radius, Widget child}) {
+  if (radius != null) {
+    return ClipRRect(
+      borderRadius: radius,
+      child: Container(
+        constraints: BoxConstraints.expand(
+          height: height,
+          width: width,
+        ),
+        child: child,
+        decoration: BoxDecoration(
+          color: color,
+        ),
+      ),
+    );
+  }
+  return Container(
+    constraints: BoxConstraints.expand(
+      height: height,
+      width: width,
+    ),
+    child: child,
+    decoration: BoxDecoration(
+      color: color,
+    ),
+  );
+}
+
+Color stressColor(int stress) {
+  if (stress <= 4) {
+    return GoogleColors.green;
+  } else if (stress <= 6) {
+    return GoogleColors.yellow;
+  }
+  return GoogleColors.red;
 }

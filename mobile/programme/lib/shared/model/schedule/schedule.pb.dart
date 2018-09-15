@@ -4,6 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -13,6 +14,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import '../routes/routes.pb.dart' as $0;
 
 import 'schedule.pbenum.dart';
+import '../routes/routes.pbenum.dart' as $0;
 
 export 'schedule.pbenum.dart';
 
@@ -61,8 +63,13 @@ class Task extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Task', package: const $pb.PackageName('shared.model.schedule'))
     ..e<TaskType>(1, 'taskType', $pb.PbFieldType.OE, TaskType.Unknown, TaskType.valueOf, TaskType.values)
     ..aOS(2, 'name')
-    ..aInt64(3, 'duration')
-    ..aInt64(4, 'stress')
+    ..aOS(3, 'description')
+    ..aInt64(4, 'duration')
+    ..aInt64(5, 'stress')
+    ..aOB(10, 'startNull')
+    ..aInt64(11, 'startValue')
+    ..aOB(12, 'travelMethodNull')
+    ..e<$0.TravelMethod>(13, 'travelMethodValue', $pb.PbFieldType.OE, $0.TravelMethod.Unknown, $0.TravelMethod.valueOf, $0.TravelMethod.values)
     ..aOB(14, 'locationNull')
     ..a<$0.Location>(15, 'locationValue', $pb.PbFieldType.OM, $0.Location.getDefault, $0.Location.create)
     ..hasRequiredFields = false
@@ -92,24 +99,117 @@ class Task extends $pb.GeneratedMessage {
   bool hasName() => $_has(1);
   void clearName() => clearField(2);
 
-  Int64 get duration => $_getI64(2);
-  set duration(Int64 v) { $_setInt64(2, v); }
-  bool hasDuration() => $_has(2);
-  void clearDuration() => clearField(3);
+  String get description => $_getS(2, '');
+  set description(String v) { $_setString(2, v); }
+  bool hasDescription() => $_has(2);
+  void clearDescription() => clearField(3);
 
-  Int64 get stress => $_getI64(3);
-  set stress(Int64 v) { $_setInt64(3, v); }
-  bool hasStress() => $_has(3);
-  void clearStress() => clearField(4);
+  Int64 get duration => $_getI64(3);
+  set duration(Int64 v) { $_setInt64(3, v); }
+  bool hasDuration() => $_has(3);
+  void clearDuration() => clearField(4);
 
-  bool get locationNull => $_get(4, false);
-  set locationNull(bool v) { $_setBool(4, v); }
-  bool hasLocationNull() => $_has(4);
+  Int64 get stress => $_getI64(4);
+  set stress(Int64 v) { $_setInt64(4, v); }
+  bool hasStress() => $_has(4);
+  void clearStress() => clearField(5);
+
+  bool get startNull => $_get(5, false);
+  set startNull(bool v) { $_setBool(5, v); }
+  bool hasStartNull() => $_has(5);
+  void clearStartNull() => clearField(10);
+
+  Int64 get startValue => $_getI64(6);
+  set startValue(Int64 v) { $_setInt64(6, v); }
+  bool hasStartValue() => $_has(6);
+  void clearStartValue() => clearField(11);
+
+  bool get travelMethodNull => $_get(7, false);
+  set travelMethodNull(bool v) { $_setBool(7, v); }
+  bool hasTravelMethodNull() => $_has(7);
+  void clearTravelMethodNull() => clearField(12);
+
+  $0.TravelMethod get travelMethodValue => $_getN(8);
+  set travelMethodValue($0.TravelMethod v) { setField(13, v); }
+  bool hasTravelMethodValue() => $_has(8);
+  void clearTravelMethodValue() => clearField(13);
+
+  bool get locationNull => $_get(9, false);
+  set locationNull(bool v) { $_setBool(9, v); }
+  bool hasLocationNull() => $_has(9);
   void clearLocationNull() => clearField(14);
 
-  $0.Location get locationValue => $_getN(5);
+  $0.Location get locationValue => $_getN(10);
   set locationValue($0.Location v) { setField(15, v); }
-  bool hasLocationValue() => $_has(5);
+  bool hasLocationValue() => $_has(10);
   void clearLocationValue() => clearField(15);
+}
+
+class NewTaskRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('NewTaskRequest', package: const $pb.PackageName('shared.model.schedule'))
+    ..aOS(1, 'user')
+    ..a<Task>(2, 'task', $pb.PbFieldType.OM, Task.getDefault, Task.create)
+    ..hasRequiredFields = false
+  ;
+
+  NewTaskRequest() : super();
+  NewTaskRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  NewTaskRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  NewTaskRequest clone() => new NewTaskRequest()..mergeFromMessage(this);
+  NewTaskRequest copyWith(void Function(NewTaskRequest) updates) => super.copyWith((message) => updates(message as NewTaskRequest));
+  $pb.BuilderInfo get info_ => _i;
+  static NewTaskRequest create() => new NewTaskRequest();
+  static $pb.PbList<NewTaskRequest> createRepeated() => new $pb.PbList<NewTaskRequest>();
+  static NewTaskRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static NewTaskRequest _defaultInstance;
+  static void $checkItem(NewTaskRequest v) {
+    if (v is! NewTaskRequest) $pb.checkItemFailed(v, _i.messageName);
+  }
+
+  String get user => $_getS(0, '');
+  set user(String v) { $_setString(0, v); }
+  bool hasUser() => $_has(0);
+  void clearUser() => clearField(1);
+
+  Task get task => $_getN(1);
+  set task(Task v) { setField(2, v); }
+  bool hasTask() => $_has(1);
+  void clearTask() => clearField(2);
+}
+
+class Boolean extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Boolean', package: const $pb.PackageName('shared.model.schedule'))
+    ..aOB(1, 'boolean')
+    ..hasRequiredFields = false
+  ;
+
+  Boolean() : super();
+  Boolean.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Boolean.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Boolean clone() => new Boolean()..mergeFromMessage(this);
+  Boolean copyWith(void Function(Boolean) updates) => super.copyWith((message) => updates(message as Boolean));
+  $pb.BuilderInfo get info_ => _i;
+  static Boolean create() => new Boolean();
+  static $pb.PbList<Boolean> createRepeated() => new $pb.PbList<Boolean>();
+  static Boolean getDefault() => _defaultInstance ??= create()..freeze();
+  static Boolean _defaultInstance;
+  static void $checkItem(Boolean v) {
+    if (v is! Boolean) $pb.checkItemFailed(v, _i.messageName);
+  }
+
+  bool get boolean => $_get(0, false);
+  set boolean(bool v) { $_setBool(0, v); }
+  bool hasBoolean() => $_has(0);
+  void clearBoolean() => clearField(1);
+}
+
+class TaskManagerApi {
+  $pb.RpcClient _client;
+  TaskManagerApi(this._client);
+
+  Future<Boolean> addTask($pb.ClientContext ctx, NewTaskRequest request) {
+    var emptyResponse = new Boolean();
+    return _client.invoke<Boolean>(ctx, 'TaskManager', 'AddTask', request, emptyResponse);
+  }
 }
 
