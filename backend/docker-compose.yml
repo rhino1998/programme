@@ -1,0 +1,14 @@
+version: '3'
+services:
+  postgres_devweb:
+    image: postgres:alpine
+    container_name: postgres_devweb
+    restart: always
+    environment:
+      - POSTGRES_USER=programme
+      - POSTGRES_PASSWORD=programme
+      - POSTGRES_DB=programme
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
