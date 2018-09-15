@@ -11,7 +11,6 @@ message Day {
 
   int64 datetime = 1; // start of day
   repeated Task tasks = 2;
-
   oneof weather {
     bool weather_null = 12;
     // Weather weather_value =13;
@@ -35,8 +34,17 @@ message Task {
 
   // Coord location = 4;
 
+  oneof start {
+    bool start_null = 12;
+    int64 start_value = 13;
+  }
+
   oneof location {
     bool location_null = 14;
     shared.model.routes.Location location_value = 15;
   }
 }
+
+message Boolean { bool boolean = 1; }
+
+service TaskManager { rpc AddTask(Task) returns(Boolean); }

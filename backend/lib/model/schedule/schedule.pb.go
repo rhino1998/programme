@@ -13,6 +13,11 @@ import strconv "strconv"
 import strings "strings"
 import reflect "reflect"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 import io "io"
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -55,7 +60,7 @@ var TaskType_value = map[string]int32{
 }
 
 func (TaskType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_schedule_e203277806fdfd16, []int{0}
+	return fileDescriptor_schedule_d0d802cdf64a9205, []int{0}
 }
 
 type Day struct {
@@ -72,7 +77,7 @@ type Day struct {
 func (m *Day) Reset()      { *m = Day{} }
 func (*Day) ProtoMessage() {}
 func (*Day) Descriptor() ([]byte, []int) {
-	return fileDescriptor_schedule_e203277806fdfd16, []int{0}
+	return fileDescriptor_schedule_d0d802cdf64a9205, []int{0}
 }
 func (m *Day) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,6 +259,10 @@ type Task struct {
 	Name     string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Duration int64    `protobuf:"varint,3,opt,name=duration,proto3" json:"duration,omitempty"`
 	Stress   int64    `protobuf:"varint,4,opt,name=stress,proto3" json:"stress,omitempty"`
+	// Types that are valid to be assigned to Start:
+	//	*Task_StartNull
+	//	*Task_StartValue
+	Start isTask_Start `protobuf_oneof:"start"`
 	// Types that are valid to be assigned to Location:
 	//	*Task_LocationNull
 	//	*Task_LocationValue
@@ -263,7 +272,7 @@ type Task struct {
 func (m *Task) Reset()      { *m = Task{} }
 func (*Task) ProtoMessage() {}
 func (*Task) Descriptor() ([]byte, []int) {
-	return fileDescriptor_schedule_e203277806fdfd16, []int{1}
+	return fileDescriptor_schedule_d0d802cdf64a9205, []int{1}
 }
 func (m *Task) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -292,6 +301,12 @@ func (m *Task) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Task proto.InternalMessageInfo
 
+type isTask_Start interface {
+	isTask_Start()
+	Equal(interface{}) bool
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
 type isTask_Location interface {
 	isTask_Location()
 	Equal(interface{}) bool
@@ -299,6 +314,12 @@ type isTask_Location interface {
 	Size() int
 }
 
+type Task_StartNull struct {
+	StartNull bool `protobuf:"varint,12,opt,name=start_null,json=startNull,proto3,oneof"`
+}
+type Task_StartValue struct {
+	StartValue int64 `protobuf:"varint,13,opt,name=start_value,json=startValue,proto3,oneof"`
+}
 type Task_LocationNull struct {
 	LocationNull bool `protobuf:"varint,14,opt,name=location_null,json=locationNull,proto3,oneof"`
 }
@@ -306,9 +327,17 @@ type Task_LocationValue struct {
 	LocationValue *routes.Location `protobuf:"bytes,15,opt,name=location_value,json=locationValue,oneof"`
 }
 
+func (*Task_StartNull) isTask_Start()        {}
+func (*Task_StartValue) isTask_Start()       {}
 func (*Task_LocationNull) isTask_Location()  {}
 func (*Task_LocationValue) isTask_Location() {}
 
+func (m *Task) GetStart() isTask_Start {
+	if m != nil {
+		return m.Start
+	}
+	return nil
+}
 func (m *Task) GetLocation() isTask_Location {
 	if m != nil {
 		return m.Location
@@ -344,6 +373,20 @@ func (m *Task) GetStress() int64 {
 	return 0
 }
 
+func (m *Task) GetStartNull() bool {
+	if x, ok := m.GetStart().(*Task_StartNull); ok {
+		return x.StartNull
+	}
+	return false
+}
+
+func (m *Task) GetStartValue() int64 {
+	if x, ok := m.GetStart().(*Task_StartValue); ok {
+		return x.StartValue
+	}
+	return 0
+}
+
 func (m *Task) GetLocationNull() bool {
 	if x, ok := m.GetLocation().(*Task_LocationNull); ok {
 		return x.LocationNull
@@ -361,6 +404,8 @@ func (m *Task) GetLocationValue() *routes.Location {
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*Task) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _Task_OneofMarshaler, _Task_OneofUnmarshaler, _Task_OneofSizer, []interface{}{
+		(*Task_StartNull)(nil),
+		(*Task_StartValue)(nil),
 		(*Task_LocationNull)(nil),
 		(*Task_LocationValue)(nil),
 	}
@@ -368,6 +413,22 @@ func (*Task) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, f
 
 func _Task_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 	m := msg.(*Task)
+	// start
+	switch x := m.Start.(type) {
+	case *Task_StartNull:
+		t := uint64(0)
+		if x.StartNull {
+			t = 1
+		}
+		_ = b.EncodeVarint(12<<3 | proto.WireVarint)
+		_ = b.EncodeVarint(t)
+	case *Task_StartValue:
+		_ = b.EncodeVarint(13<<3 | proto.WireVarint)
+		_ = b.EncodeVarint(uint64(x.StartValue))
+	case nil:
+	default:
+		return fmt.Errorf("Task.Start has unexpected type %T", x)
+	}
 	// location
 	switch x := m.Location.(type) {
 	case *Task_LocationNull:
@@ -392,6 +453,20 @@ func _Task_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 func _Task_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
 	m := msg.(*Task)
 	switch tag {
+	case 12: // start.start_null
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.Start = &Task_StartNull{x != 0}
+		return true, err
+	case 13: // start.start_value
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.Start = &Task_StartValue{int64(x)}
+		return true, err
 	case 14: // location.location_null
 		if wire != proto.WireVarint {
 			return true, proto.ErrInternalBadWireType
@@ -414,6 +489,18 @@ func _Task_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (
 
 func _Task_OneofSizer(msg proto.Message) (n int) {
 	m := msg.(*Task)
+	// start
+	switch x := m.Start.(type) {
+	case *Task_StartNull:
+		n += 1 // tag and wire
+		n += 1
+	case *Task_StartValue:
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(x.StartValue))
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
 	// location
 	switch x := m.Location.(type) {
 	case *Task_LocationNull:
@@ -431,9 +518,53 @@ func _Task_OneofSizer(msg proto.Message) (n int) {
 	return n
 }
 
+type Boolean struct {
+	Boolean bool `protobuf:"varint,1,opt,name=boolean,proto3" json:"boolean,omitempty"`
+}
+
+func (m *Boolean) Reset()      { *m = Boolean{} }
+func (*Boolean) ProtoMessage() {}
+func (*Boolean) Descriptor() ([]byte, []int) {
+	return fileDescriptor_schedule_d0d802cdf64a9205, []int{2}
+}
+func (m *Boolean) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Boolean) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Boolean.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Boolean) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Boolean.Merge(dst, src)
+}
+func (m *Boolean) XXX_Size() int {
+	return m.Size()
+}
+func (m *Boolean) XXX_DiscardUnknown() {
+	xxx_messageInfo_Boolean.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Boolean proto.InternalMessageInfo
+
+func (m *Boolean) GetBoolean() bool {
+	if m != nil {
+		return m.Boolean
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*Day)(nil), "shared.model.schedule.Day")
 	proto.RegisterType((*Task)(nil), "shared.model.schedule.Task")
+	proto.RegisterType((*Boolean)(nil), "shared.model.schedule.Boolean")
 	proto.RegisterEnum("shared.model.schedule.TaskType", TaskType_name, TaskType_value)
 }
 func (x TaskType) String() string {
@@ -572,6 +703,15 @@ func (this *Task) Equal(that interface{}) bool {
 	if this.Stress != that1.Stress {
 		return false
 	}
+	if that1.Start == nil {
+		if this.Start != nil {
+			return false
+		}
+	} else if this.Start == nil {
+		return false
+	} else if !this.Start.Equal(that1.Start) {
+		return false
+	}
 	if that1.Location == nil {
 		if this.Location != nil {
 			return false
@@ -579,6 +719,54 @@ func (this *Task) Equal(that interface{}) bool {
 	} else if this.Location == nil {
 		return false
 	} else if !this.Location.Equal(that1.Location) {
+		return false
+	}
+	return true
+}
+func (this *Task_StartNull) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Task_StartNull)
+	if !ok {
+		that2, ok := that.(Task_StartNull)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.StartNull != that1.StartNull {
+		return false
+	}
+	return true
+}
+func (this *Task_StartValue) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Task_StartValue)
+	if !ok {
+		that2, ok := that.(Task_StartValue)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.StartValue != that1.StartValue {
 		return false
 	}
 	return true
@@ -631,6 +819,30 @@ func (this *Task_LocationValue) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *Boolean) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Boolean)
+	if !ok {
+		that2, ok := that.(Boolean)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Boolean != that1.Boolean {
+		return false
+	}
+	return true
+}
 func (this *Day) GoString() string {
 	if this == nil {
 		return "nil"
@@ -670,17 +882,36 @@ func (this *Task) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 10)
+	s := make([]string, 0, 12)
 	s = append(s, "&schedule.Task{")
 	s = append(s, "TaskType: "+fmt.Sprintf("%#v", this.TaskType)+",\n")
 	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
 	s = append(s, "Duration: "+fmt.Sprintf("%#v", this.Duration)+",\n")
 	s = append(s, "Stress: "+fmt.Sprintf("%#v", this.Stress)+",\n")
+	if this.Start != nil {
+		s = append(s, "Start: "+fmt.Sprintf("%#v", this.Start)+",\n")
+	}
 	if this.Location != nil {
 		s = append(s, "Location: "+fmt.Sprintf("%#v", this.Location)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
+}
+func (this *Task_StartNull) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&schedule.Task_StartNull{` +
+		`StartNull:` + fmt.Sprintf("%#v", this.StartNull) + `}`}, ", ")
+	return s
+}
+func (this *Task_StartValue) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&schedule.Task_StartValue{` +
+		`StartValue:` + fmt.Sprintf("%#v", this.StartValue) + `}`}, ", ")
+	return s
 }
 func (this *Task_LocationNull) GoString() string {
 	if this == nil {
@@ -698,6 +929,16 @@ func (this *Task_LocationValue) GoString() string {
 		`LocationValue:` + fmt.Sprintf("%#v", this.LocationValue) + `}`}, ", ")
 	return s
 }
+func (this *Boolean) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&schedule.Boolean{")
+	s = append(s, "Boolean: "+fmt.Sprintf("%#v", this.Boolean)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
 func valueToGoStringSchedule(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)
 	if rv.IsNil() {
@@ -706,6 +947,79 @@ func valueToGoStringSchedule(v interface{}, typ string) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
 }
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// TaskManagerClient is the client API for TaskManager service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type TaskManagerClient interface {
+	AddTask(ctx context.Context, in *Task, opts ...grpc.CallOption) (*Boolean, error)
+}
+
+type taskManagerClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewTaskManagerClient(cc *grpc.ClientConn) TaskManagerClient {
+	return &taskManagerClient{cc}
+}
+
+func (c *taskManagerClient) AddTask(ctx context.Context, in *Task, opts ...grpc.CallOption) (*Boolean, error) {
+	out := new(Boolean)
+	err := c.cc.Invoke(ctx, "/shared.model.schedule.TaskManager/AddTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TaskManagerServer is the server API for TaskManager service.
+type TaskManagerServer interface {
+	AddTask(context.Context, *Task) (*Boolean, error)
+}
+
+func RegisterTaskManagerServer(s *grpc.Server, srv TaskManagerServer) {
+	s.RegisterService(&_TaskManager_serviceDesc, srv)
+}
+
+func _TaskManager_AddTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Task)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskManagerServer).AddTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shared.model.schedule.TaskManager/AddTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskManagerServer).AddTask(ctx, req.(*Task))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _TaskManager_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "shared.model.schedule.TaskManager",
+	HandlerType: (*TaskManagerServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AddTask",
+			Handler:    _TaskManager_AddTask_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "shared/model/schedule/schedule.proto",
+}
+
 func (m *Day) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -815,16 +1129,42 @@ func (m *Task) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintSchedule(dAtA, i, uint64(m.Stress))
 	}
-	if m.Location != nil {
-		nn3, err := m.Location.MarshalTo(dAtA[i:])
+	if m.Start != nil {
+		nn3, err := m.Start.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += nn3
 	}
+	if m.Location != nil {
+		nn4, err := m.Location.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += nn4
+	}
 	return i, nil
 }
 
+func (m *Task_StartNull) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	dAtA[i] = 0x60
+	i++
+	if m.StartNull {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i++
+	return i, nil
+}
+func (m *Task_StartValue) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	dAtA[i] = 0x68
+	i++
+	i = encodeVarintSchedule(dAtA, i, uint64(m.StartValue))
+	return i, nil
+}
 func (m *Task_LocationNull) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	dAtA[i] = 0x70
@@ -843,14 +1183,42 @@ func (m *Task_LocationValue) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x7a
 		i++
 		i = encodeVarintSchedule(dAtA, i, uint64(m.LocationValue.Size()))
-		n4, err := m.LocationValue.MarshalTo(dAtA[i:])
+		n5, err := m.LocationValue.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n4
+		i += n5
 	}
 	return i, nil
 }
+func (m *Boolean) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Boolean) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Boolean {
+		dAtA[i] = 0x8
+		i++
+		if m.Boolean {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	return i, nil
+}
+
 func encodeVarintSchedule(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -921,12 +1289,33 @@ func (m *Task) Size() (n int) {
 	if m.Stress != 0 {
 		n += 1 + sovSchedule(uint64(m.Stress))
 	}
+	if m.Start != nil {
+		n += m.Start.Size()
+	}
 	if m.Location != nil {
 		n += m.Location.Size()
 	}
 	return n
 }
 
+func (m *Task_StartNull) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 2
+	return n
+}
+func (m *Task_StartValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovSchedule(uint64(m.StartValue))
+	return n
+}
 func (m *Task_LocationNull) Size() (n int) {
 	if m == nil {
 		return 0
@@ -945,6 +1334,17 @@ func (m *Task_LocationValue) Size() (n int) {
 	if m.LocationValue != nil {
 		l = m.LocationValue.Size()
 		n += 1 + l + sovSchedule(uint64(l))
+	}
+	return n
+}
+func (m *Boolean) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Boolean {
+		n += 2
 	}
 	return n
 }
@@ -1004,7 +1404,28 @@ func (this *Task) String() string {
 		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
 		`Duration:` + fmt.Sprintf("%v", this.Duration) + `,`,
 		`Stress:` + fmt.Sprintf("%v", this.Stress) + `,`,
+		`Start:` + fmt.Sprintf("%v", this.Start) + `,`,
 		`Location:` + fmt.Sprintf("%v", this.Location) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Task_StartNull) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Task_StartNull{`,
+		`StartNull:` + fmt.Sprintf("%v", this.StartNull) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Task_StartValue) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Task_StartValue{`,
+		`StartValue:` + fmt.Sprintf("%v", this.StartValue) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1025,6 +1446,16 @@ func (this *Task_LocationValue) String() string {
 	}
 	s := strings.Join([]string{`&Task_LocationValue{`,
 		`LocationValue:` + strings.Replace(fmt.Sprintf("%v", this.LocationValue), "Location", "routes.Location", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Boolean) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Boolean{`,
+		`Boolean:` + fmt.Sprintf("%v", this.Boolean) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1294,6 +1725,47 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartNull", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			b := bool(v != 0)
+			m.Start = &Task_StartNull{b}
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartValue", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Start = &Task_StartValue{v}
 		case 14:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LocationNull", wireType)
@@ -1347,6 +1819,76 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 			}
 			m.Location = &Task_LocationValue{v}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedule(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSchedule
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Boolean) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedule
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Boolean: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Boolean: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Boolean", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedule
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Boolean = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipSchedule(dAtA[iNdEx:])
@@ -1474,40 +2016,45 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("shared/model/schedule/schedule.proto", fileDescriptor_schedule_e203277806fdfd16)
+	proto.RegisterFile("shared/model/schedule/schedule.proto", fileDescriptor_schedule_d0d802cdf64a9205)
 }
 
-var fileDescriptor_schedule_e203277806fdfd16 = []byte{
-	// 494 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0x3d, 0x6f, 0xd3, 0x40,
-	0x18, 0xc7, 0x7d, 0x49, 0x9a, 0x3a, 0x4f, 0xd2, 0x60, 0x9d, 0x04, 0xb2, 0x8a, 0x38, 0xac, 0x02,
-	0x52, 0xc4, 0x60, 0xab, 0x61, 0x21, 0x12, 0x53, 0x40, 0x51, 0x07, 0xc4, 0x60, 0x02, 0x42, 0x2c,
-	0xd5, 0x25, 0xbe, 0x26, 0x56, 0xce, 0x77, 0xd1, 0xf9, 0xdc, 0x2a, 0x1b, 0x1b, 0x2b, 0x1f, 0x83,
-	0x0f, 0xc0, 0x87, 0x60, 0xcc, 0xd8, 0x91, 0x38, 0x0b, 0x63, 0x3f, 0x02, 0xb2, 0x7d, 0x89, 0x28,
-	0x42, 0x9d, 0xfc, 0xbc, 0xfc, 0xfe, 0x7e, 0x5e, 0xee, 0x81, 0xa7, 0xe9, 0x9c, 0x2a, 0x16, 0x05,
-	0x89, 0x8c, 0x18, 0x0f, 0xd2, 0xe9, 0x9c, 0x45, 0x19, 0x67, 0x7b, 0xc3, 0x5f, 0x2a, 0xa9, 0x25,
-	0xbe, 0x5f, 0x51, 0x7e, 0x49, 0xf9, 0xbb, 0xe4, 0xb1, 0x77, 0x4b, 0xac, 0x64, 0xa6, 0x59, 0x6a,
-	0x3e, 0x95, 0xf0, 0xe4, 0x07, 0x82, 0xfa, 0x1b, 0xba, 0xc2, 0xc7, 0x60, 0x47, 0x54, 0x33, 0x1d,
-	0x27, 0xcc, 0x45, 0x1e, 0xea, 0xd5, 0xc3, 0xbd, 0x8f, 0x4f, 0xe1, 0x40, 0xd3, 0x74, 0x91, 0xba,
-	0x35, 0xaf, 0xde, 0x6b, 0xf7, 0x1f, 0xfa, 0xff, 0x2d, 0xe6, 0x8f, 0x69, 0xba, 0x08, 0x2b, 0x12,
-	0x3f, 0x81, 0xce, 0x15, 0xa3, 0x7a, 0xce, 0xd4, 0xb9, 0xc8, 0x38, 0x77, 0x3b, 0x1e, 0xea, 0xd9,
-	0x67, 0x56, 0xd8, 0x36, 0xd1, 0x77, 0x19, 0xe7, 0x05, 0xa4, 0x15, 0xbd, 0xb8, 0x88, 0xa7, 0x15,
-	0xd4, 0x2d, 0x21, 0x14, 0xb6, 0x4d, 0xb4, 0x80, 0x86, 0x2d, 0x38, 0x34, 0x9a, 0xc2, 0x34, 0x99,
-	0x93, 0xaf, 0x35, 0x68, 0x14, 0xf5, 0xf0, 0x2b, 0x68, 0x15, 0x15, 0xcf, 0xf5, 0x6a, 0x59, 0x35,
-	0xde, 0xed, 0x3f, 0xbe, 0xa3, 0xbf, 0xf1, 0x6a, 0xc9, 0x42, 0x5b, 0x1b, 0x0b, 0x63, 0x68, 0x08,
-	0x9a, 0x30, 0xb7, 0xe6, 0xa1, 0x5e, 0x2b, 0x2c, 0xed, 0x72, 0x13, 0x99, 0xa2, 0x3a, 0x96, 0xc2,
-	0xad, 0x9b, 0x4d, 0x18, 0x1f, 0x3f, 0x80, 0x66, 0xaa, 0x15, 0x4b, 0x53, 0xb7, 0x51, 0x66, 0x8c,
-	0x87, 0x9f, 0xc1, 0x11, 0x97, 0xd3, 0x92, 0xf9, 0x7b, 0x14, 0x2b, 0xec, 0xec, 0xc2, 0xe5, 0xc0,
-	0x23, 0xe8, 0xee, 0xb1, 0x4b, 0xca, 0x33, 0xe6, 0xde, 0xf3, 0x50, 0xaf, 0xdd, 0x7f, 0x74, 0xbb,
-	0x63, 0xf3, 0x40, 0x6f, 0x0d, 0x7a, 0x66, 0x85, 0xfb, 0xbf, 0x7f, 0x2c, 0x54, 0x43, 0x00, 0x7b,
-	0x17, 0x78, 0xfe, 0x09, 0xec, 0xdd, 0x60, 0xb8, 0x0d, 0x87, 0x1f, 0xc4, 0x42, 0xc8, 0x2b, 0xe1,
-	0x58, 0xb8, 0x03, 0xf6, 0x88, 0x4b, 0xaa, 0x63, 0x31, 0x73, 0x10, 0x3e, 0x82, 0xd6, 0x7b, 0xb3,
-	0x88, 0xc8, 0xa9, 0x15, 0xc9, 0xd7, 0x94, 0x33, 0x11, 0x51, 0xe5, 0xd4, 0xb1, 0x0d, 0x8d, 0x91,
-	0x62, 0xcc, 0x69, 0x60, 0x80, 0xe6, 0x58, 0xd1, 0x4b, 0xc6, 0x9d, 0x83, 0xa1, 0x5c, 0x6f, 0x88,
-	0x75, 0xbd, 0x21, 0xd6, 0xcd, 0x86, 0xa0, 0x2f, 0x39, 0x41, 0xdf, 0x73, 0x82, 0x7e, 0xe6, 0x04,
-	0xad, 0x73, 0x82, 0x7e, 0xe5, 0x04, 0xfd, 0xce, 0x89, 0x75, 0x93, 0x13, 0xf4, 0x6d, 0x4b, 0xac,
-	0xf5, 0x96, 0x58, 0xd7, 0x5b, 0x62, 0x7d, 0x1e, 0xcc, 0x62, 0x3d, 0xcf, 0x26, 0xfe, 0x54, 0x26,
-	0x81, 0x9a, 0xc7, 0x42, 0x9e, 0x0e, 0x06, 0x2f, 0x83, 0xa5, 0x92, 0x33, 0x45, 0x93, 0x84, 0x05,
-	0x13, 0x3a, 0x5d, 0x30, 0x11, 0x05, 0x3c, 0x9e, 0xfc, 0x73, 0xd3, 0x93, 0x66, 0x79, 0x92, 0x2f,
-	0xfe, 0x04, 0x00, 0x00, 0xff, 0xff, 0xc6, 0x01, 0xc5, 0x85, 0xf3, 0x02, 0x00, 0x00,
+var fileDescriptor_schedule_d0d802cdf64a9205 = []byte{
+	// 573 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x53, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0xf5, 0x26, 0x69, 0xe3, 0x8c, 0xd3, 0x12, 0xad, 0x04, 0xb2, 0x8a, 0xd8, 0x86, 0x16, 0xa4,
+	0x88, 0x83, 0xad, 0x86, 0x0b, 0x95, 0xb8, 0x10, 0x50, 0xd4, 0x03, 0x70, 0x30, 0x2d, 0x42, 0x5c,
+	0xaa, 0x4d, 0xbc, 0x4d, 0xac, 0xac, 0x77, 0xa3, 0xf5, 0xba, 0x55, 0x6f, 0x7c, 0x02, 0x9f, 0xc1,
+	0x07, 0xf0, 0x11, 0x1c, 0x7b, 0xe0, 0xd0, 0x23, 0x75, 0x2e, 0x1c, 0xfb, 0x09, 0xc8, 0xeb, 0x4d,
+	0xa4, 0x20, 0xe8, 0xc9, 0x33, 0xf3, 0xde, 0xcc, 0xdb, 0x79, 0xeb, 0x85, 0x27, 0xd9, 0x94, 0x2a,
+	0x16, 0x87, 0xa9, 0x8c, 0x19, 0x0f, 0xb3, 0xf1, 0x94, 0xc5, 0x39, 0x67, 0xab, 0x20, 0x98, 0x2b,
+	0xa9, 0x25, 0xbe, 0x5f, 0xb1, 0x02, 0xc3, 0x0a, 0x96, 0xe0, 0x4e, 0x77, 0xad, 0x59, 0xc9, 0x5c,
+	0xb3, 0xcc, 0x7e, 0xaa, 0xc6, 0xbd, 0xef, 0x08, 0xea, 0x6f, 0xe8, 0x25, 0xde, 0x01, 0x37, 0xa6,
+	0x9a, 0xe9, 0x24, 0x65, 0x3e, 0xea, 0xa2, 0x5e, 0x3d, 0x5a, 0xe5, 0xf8, 0x00, 0x36, 0x34, 0xcd,
+	0x66, 0x99, 0x5f, 0xeb, 0xd6, 0x7b, 0x5e, 0xff, 0x61, 0xf0, 0x4f, 0xb1, 0xe0, 0x98, 0x66, 0xb3,
+	0xa8, 0x62, 0xe2, 0x7d, 0x68, 0x5f, 0x30, 0xaa, 0xa7, 0x4c, 0x9d, 0x8a, 0x9c, 0x73, 0xbf, 0xdd,
+	0x45, 0x3d, 0xf7, 0xc8, 0x89, 0x3c, 0x5b, 0x7d, 0x9f, 0x73, 0x5e, 0x92, 0xb4, 0xa2, 0x67, 0x67,
+	0xc9, 0xb8, 0x22, 0x6d, 0x1b, 0x12, 0x8a, 0x3c, 0x5b, 0x2d, 0x49, 0x83, 0x16, 0x34, 0x6d, 0x4f,
+	0x19, 0x5a, 0x64, 0xef, 0x67, 0x0d, 0x1a, 0xa5, 0x1e, 0x7e, 0x09, 0xad, 0x52, 0xf1, 0x54, 0x5f,
+	0xce, 0xab, 0x83, 0x6f, 0xf7, 0x77, 0xef, 0x38, 0xdf, 0xf1, 0xe5, 0x9c, 0x45, 0xae, 0xb6, 0x11,
+	0xc6, 0xd0, 0x10, 0x34, 0x65, 0x7e, 0xad, 0x8b, 0x7a, 0xad, 0xc8, 0xc4, 0xc6, 0x89, 0x5c, 0x51,
+	0x9d, 0x48, 0xe1, 0xd7, 0xad, 0x13, 0x36, 0xc7, 0x0f, 0x60, 0x33, 0xd3, 0x8a, 0x65, 0x99, 0xdf,
+	0x30, 0x88, 0xcd, 0xf0, 0x2e, 0x40, 0xa6, 0xa9, 0xd2, 0xeb, 0xcb, 0xb6, 0x4c, 0xcd, 0xac, 0xfa,
+	0x18, 0xbc, 0x8a, 0x70, 0x4e, 0x79, 0xce, 0xfc, 0xad, 0xb2, 0xfb, 0xc8, 0x89, 0xaa, 0xae, 0x8f,
+	0x65, 0x0d, 0x3f, 0x85, 0x2d, 0x2e, 0xc7, 0x46, 0x67, 0xdd, 0x8e, 0xf6, 0xb2, 0x6c, 0x26, 0x0d,
+	0x61, 0x7b, 0x45, 0xab, 0x86, 0xdd, 0xeb, 0xa2, 0x9e, 0xd7, 0x7f, 0xb4, 0xbe, 0xb5, 0xbd, 0xe4,
+	0xb7, 0x96, 0x7a, 0x84, 0xa2, 0xd5, 0x74, 0x23, 0x37, 0x68, 0xc2, 0x86, 0x11, 0x1f, 0x00, 0xb8,
+	0x4b, 0x64, 0x6f, 0x1f, 0x9a, 0x03, 0x29, 0x39, 0xa3, 0x02, 0xfb, 0xd0, 0x1c, 0x55, 0xa1, 0xb1,
+	0xd5, 0x8d, 0x96, 0xe9, 0xb3, 0x4f, 0xe0, 0x2e, 0xad, 0xc4, 0x1e, 0x34, 0x4f, 0xc4, 0x4c, 0xc8,
+	0x0b, 0xd1, 0x71, 0x70, 0x1b, 0xdc, 0x21, 0x97, 0x54, 0x27, 0x62, 0xd2, 0x41, 0x78, 0x0b, 0x5a,
+	0x1f, 0xac, 0xf5, 0x71, 0xa7, 0x56, 0x82, 0xaf, 0x29, 0x67, 0x22, 0xa6, 0xaa, 0x53, 0xc7, 0x2e,
+	0x34, 0x86, 0x8a, 0xb1, 0x4e, 0x03, 0x03, 0x6c, 0x1e, 0x2b, 0x7a, 0xce, 0x78, 0x67, 0xa3, 0x7f,
+	0x02, 0x5e, 0x39, 0xf9, 0x1d, 0x15, 0x74, 0xc2, 0x14, 0x1e, 0x42, 0xf3, 0x55, 0x1c, 0x9b, 0x6b,
+	0xbe, 0xeb, 0x9f, 0xdb, 0x21, 0xff, 0x01, 0xed, 0x2a, 0x03, 0x79, 0x75, 0x43, 0x9c, 0xeb, 0x1b,
+	0xe2, 0xdc, 0xde, 0x10, 0xf4, 0xa5, 0x20, 0xe8, 0x5b, 0x41, 0xd0, 0x8f, 0x82, 0xa0, 0xab, 0x82,
+	0xa0, 0x5f, 0x05, 0x41, 0xbf, 0x0b, 0xe2, 0xdc, 0x16, 0x04, 0x7d, 0x5d, 0x10, 0xe7, 0x6a, 0x41,
+	0x9c, 0xeb, 0x05, 0x71, 0x3e, 0x1f, 0x4e, 0x12, 0x3d, 0xcd, 0x47, 0xc1, 0x58, 0xa6, 0xa1, 0x9a,
+	0x26, 0x42, 0x1e, 0x1c, 0x1e, 0xbe, 0x08, 0xe7, 0x4a, 0x4e, 0x14, 0x4d, 0x53, 0x16, 0x8e, 0xe8,
+	0x78, 0xc6, 0x44, 0x1c, 0xf2, 0x64, 0xf4, 0xd7, 0xe3, 0x1c, 0x6d, 0x9a, 0xb7, 0xf5, 0xfc, 0x4f,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x77, 0xbd, 0x25, 0x46, 0xbc, 0x03, 0x00, 0x00,
 }
