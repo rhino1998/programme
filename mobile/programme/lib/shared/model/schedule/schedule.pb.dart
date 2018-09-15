@@ -12,6 +12,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../routes/routes.pb.dart' as $0;
 
+import 'schedule.pbenum.dart';
+
+export 'schedule.pbenum.dart';
+
 class Day extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Day', package: const $pb.PackageName('shared.model.schedule'))
     ..aInt64(1, 'datetime')
@@ -55,9 +59,10 @@ class Day extends $pb.GeneratedMessage {
 
 class Task extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Task', package: const $pb.PackageName('shared.model.schedule'))
-    ..aOS(1, 'name')
-    ..aInt64(2, 'duration')
-    ..aInt64(3, 'stress')
+    ..e<TaskType>(1, 'taskType', $pb.PbFieldType.OE, TaskType.Unknown, TaskType.valueOf, TaskType.values)
+    ..aOS(2, 'name')
+    ..aInt64(3, 'duration')
+    ..aInt64(4, 'stress')
     ..aOB(14, 'locationNull')
     ..a<$0.Location>(15, 'locationValue', $pb.PbFieldType.OM, $0.Location.getDefault, $0.Location.create)
     ..hasRequiredFields = false
@@ -77,29 +82,34 @@ class Task extends $pb.GeneratedMessage {
     if (v is! Task) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  String get name => $_getS(0, '');
-  set name(String v) { $_setString(0, v); }
-  bool hasName() => $_has(0);
-  void clearName() => clearField(1);
+  TaskType get taskType => $_getN(0);
+  set taskType(TaskType v) { setField(1, v); }
+  bool hasTaskType() => $_has(0);
+  void clearTaskType() => clearField(1);
 
-  Int64 get duration => $_getI64(1);
-  set duration(Int64 v) { $_setInt64(1, v); }
-  bool hasDuration() => $_has(1);
-  void clearDuration() => clearField(2);
+  String get name => $_getS(1, '');
+  set name(String v) { $_setString(1, v); }
+  bool hasName() => $_has(1);
+  void clearName() => clearField(2);
 
-  Int64 get stress => $_getI64(2);
-  set stress(Int64 v) { $_setInt64(2, v); }
-  bool hasStress() => $_has(2);
-  void clearStress() => clearField(3);
+  Int64 get duration => $_getI64(2);
+  set duration(Int64 v) { $_setInt64(2, v); }
+  bool hasDuration() => $_has(2);
+  void clearDuration() => clearField(3);
 
-  bool get locationNull => $_get(3, false);
-  set locationNull(bool v) { $_setBool(3, v); }
-  bool hasLocationNull() => $_has(3);
+  Int64 get stress => $_getI64(3);
+  set stress(Int64 v) { $_setInt64(3, v); }
+  bool hasStress() => $_has(3);
+  void clearStress() => clearField(4);
+
+  bool get locationNull => $_get(4, false);
+  set locationNull(bool v) { $_setBool(4, v); }
+  bool hasLocationNull() => $_has(4);
   void clearLocationNull() => clearField(14);
 
-  $0.Location get locationValue => $_getN(4);
+  $0.Location get locationValue => $_getN(5);
   set locationValue($0.Location v) { setField(15, v); }
-  bool hasLocationValue() => $_has(4);
+  bool hasLocationValue() => $_has(5);
   void clearLocationValue() => clearField(15);
 }
 

@@ -1,56 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'dart:math';
 
-var rng = new Random();
+import 'day.dart';
+import 'model.dart';
+
+import 'shared/ui/icon.dart';
+import 'shared/ui/floating.dart';
 
 var timeFormat = DateFormat('hh:mm a');
-
-class Day {
-  List<ScheduledTask> tasks = new List();
-  DateTime startTime = new DateTime(0, 0, 0, 8);
-
-  Day() {
-    var cur = startTime;
-    for (int i = rng.nextInt(5) + 3; i >= 0; i--) {
-      var next = cur.add(new Duration(minutes: rng.nextInt(60) + 30));
-      tasks.add(new ScheduledTask(cur, next));
-      cur = next;
-    }
-  }
-
-  String dateName() {
-    return "Today";
-  }
-
-  Duration duration() {
-    return tasks.fold(new Duration(seconds: 0),
-        (sum, task) => task.end.difference(task.start) + sum);
-  }
-
-  int stress() {
-    return tasks.fold(0, (sum, task) => task.stress + sum);
-  }
-
-  int score() {
-    var dur = duration();
-    return stress() * dur.inMinutes + dur.inHours * dur.inHours;
-  }
-}
-
-class ScheduledTask {
-  String name = "GENERIC";
-  int stress = 0;
-  DateTime start;
-  DateTime end;
-
-  ScheduledTask(this.start, this.end) {
-    this.name = WordPair.random().asPascalCase;
-    this.stress = rng.nextInt(10);
-  }
-}
 
 class TaskList extends StatefulWidget {
   @override
@@ -61,7 +18,7 @@ class TaskListState extends State<TaskList> {
   List<Day> days = new List();
 
   TaskListState() {
-    for (int i = rng.nextInt(5) + 3; i >= 0; i--) {
+    for (int i = rng.nextInt(10) + 6; i >= 0; i--) {
       days.add(Day());
     }
   }
@@ -91,7 +48,14 @@ class DayRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return GestureDetector(
+      onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DayPage(day)),
+              );
+            },
+      child: Row(
       children: <Widget>[
         Container(
           constraints: BoxConstraints.expand(
@@ -99,7 +63,7 @@ class DayRow extends StatelessWidget {
             width: 10.0,
           ),
           decoration: BoxDecoration(
-            color: Colors.purple,
+            color: Theme.of(context).accentColor,
           ),
         ),
         Padding(
@@ -117,38 +81,11 @@ class DayRow extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
           child: Row(
             children: <Widget>[
-              scoreIcon(),
+              scoreIcon(day.score()),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  CircleAvatar scoreIcon() {
-    var score = day.score();
-    if (score < 4000) {
-      return CircleAvatar(
-        backgroundColor: Colors.green,
-        child: new Icon(
-          MdiIcons.emoticonHappy,
-          color: Colors.white,
-        ),
-      );
-    } else if (score < 8000) {
-      return CircleAvatar(
-        backgroundColor: Colors.yellow,
-        child: new Icon(
-          MdiIcons.emoticonNeutral,
-          color: Colors.white,
-        ),
-      );
-    }
-    return CircleAvatar(
-      backgroundColor: Colors.red,
-      child: new Icon(
-        MdiIcons.emoticonDead,
-        color: Colors.white,
       ),
     );
   }
@@ -160,7 +97,7 @@ class TaskRow extends StatefulWidget {
   TaskRow(this._task);
 
   @override
-  TaskRowState createState() => new TaskRowState(this._task);
+  TaskRowState createState() => new TaskRowState(_task);
 }
 
 class TaskRowState extends State<TaskRow> {
@@ -184,7 +121,7 @@ class TaskRowState extends State<TaskRow> {
         Padding(
           padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
           child: Text(
-            this._task.name,
+            _task.name,
             style: TextStyle(
               fontSize: 18.0,
             ),
@@ -194,7 +131,7 @@ class TaskRowState extends State<TaskRow> {
         Padding(
           padding: EdgeInsets.fromLTRB(0.0, 0.0, 48.0, 0.0),
           child: Text(
-            timeFormat.format(this._task.start),
+            timeFormat.format(_task.start),
             style: TextStyle(
               color: Theme.of(context).textTheme.body2.color,
               fontSize: 18.0,
@@ -206,9 +143,11 @@ class TaskRowState extends State<TaskRow> {
   }
 
   Color taskListStressBarColor() {
-    if (this._task.stress <= 3) {
+    if (_task.stress <= 3) {
       return Colors.green;
-    } else if (this._task.stress <= 6) {
+    } else if (_task.stress <= 5) {
+      return Colors.yellow;
+    }else if (_task.stress <= 7){
       return Colors.orange;
     }
     return Colors.red;
