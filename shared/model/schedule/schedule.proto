@@ -29,14 +29,20 @@ enum TaskType {
 message Task {
   TaskType task_type = 1;
   string name = 2;
-  int64 duration = 3;
-  int64 stress = 4;
+  string description = 3;
+  int64 duration = 4;
+  int64 stress = 5;
 
   // Coord location = 4;
 
   oneof start {
-    bool start_null = 12;
-    int64 start_value = 13;
+    bool start_null = 10;
+    int64 start_value = 11;
+  }
+
+  oneof travel_method {
+    bool travel_method_null = 12;
+    shared.model.routes.TravelMethod travel_method_value = 13;
   }
 
   oneof location {
@@ -45,6 +51,11 @@ message Task {
   }
 }
 
+message NewTaskRequest {
+  string user = 1;
+  Task task = 2;
+}
+
 message Boolean { bool boolean = 1; }
 
-service TaskManager { rpc AddTask(Task) returns(Boolean); }
+service TaskManager { rpc AddTask(NewTaskRequest) returns(Boolean); }

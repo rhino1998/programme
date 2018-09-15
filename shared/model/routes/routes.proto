@@ -4,11 +4,18 @@ package shared.model.routes;
 
 option go_package = "github.com/rhino1998/programme/backend/lib/model/routes";
 
-enum TravelMethod { Walking = 0; Biking = 1; Rideshare = 2; Car = 3; }
+enum TravelMethod {
+  Unknown = 0; Walking = 1; Biking = 2; Rideshare = 3; Car = 4;
+}
+
+message Coords {
+  double Latitude = 1;
+  double Longitude = 2;
+}
 
 message Location {
   string name = 1;
-  // Coord coords = 2;
+  Coords coords = 2;
 }
 
 message Trip {
