@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package forcast;
+
+// Geo location of city
+message Coord {
+	double longitude = 1;
+	double lattitude = 2;
+}
+
+message Sys {
+	string country = 1;
+	uint64 sunrise = 2;
+	uint64 sunset = 3;
+}
+
+message Main {
+	double temperature = 1;					// Expected Temperature (C)
+	double temp_min = 2;					// Current temperature low estimate
+	double temp_max = 3;					// Current temperature high estimate
+	double pressure = 4;					// Atmospheric pressure at sea level, if no sea or grnd level(hPa)
+	double sea_level = 5;					// Atmospheric pressure on the sea level (hPa)
+	double grnd_level = 6;	 				// Atmospheric pressure on the ground level (hPa)
+	int64 humidity = 7;
+	int64 temp_kf = 8;
+}
+
+// Mainly use id from this, can 
+message Weather {				
+	int64 id = 1;							// openweathermap.org/weather-conditions
+	string main = 2;						// Which group according to website, if id = 5xx -> main = Rain 
+	string description = 3;					// Specific condition within group
+}
+
+
+message Wind {
+	double speed = 1;						// Meters / Second
+	double deg = 2;							// Meteorological degrees
+	double gust = 3;						// Meters / second
+}
+
+message Rain {
+	int64 three_hours = 1;					// Precipitation volume for last 3 hours (mm)
+}
+
+message Snow {
+	int64 three_hours = 1;					// Snow volume for last 3 hours (mm)
+}
+
+message Clouds {
+	int64 all = 1;							// Cloudiness in %
+}
+
+message List {
+	int64 dt = 1;						// Data receiving time (UTC)
+	Main main = 2;
+	repeated Weather weather = 3;
+	Clouds clouds = 4;
+	Wind wind = 5;
+	Rain rain = 6;
+	Sys sys = 7;						// Only available in current forecast
+	string dt_txt =8;					// Date/time (UTC)
+}
+
+message City {
+	int64 id = 1; 						// City id number
+	string name = 2;	
+	Coord coord = 3;
+	string country = 4; 				// Country code: GB, JP, etc.
+}
+
+message Forecast {
+	int64 cod = 1;						// Internal param					
+	string message = 2;					// Internal param
+	int64 cnt = 3; 						// Number of lines returned by API call
+	repeated List list = 4;				// Most of the actual weather
+	City city = 5;
+}
