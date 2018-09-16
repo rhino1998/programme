@@ -5,7 +5,6 @@ import 'day.dart';
 import 'model.dart';
 
 import 'shared/ui/icon.dart';
-import 'shared/ui/google.dart';
 import 'shared/ui/timeformat.dart';
 
 class TaskList extends StatefulWidget {
@@ -25,11 +24,12 @@ class TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     var rows = days.fold<List<Widget>>(
-        [],
-        (l, day) =>
-            l +
-            ((day.tasks.length == 0) ? [] : [new DayRow(day)]) +
-            day.tasks.map((task) => new TaskRow(task)).toList()) + List.generate(5, (_)=>ListTile());
+            [],
+            (l, day) =>
+                l +
+                ((day.tasks.length == 0) ? [] : [new DayRow(day)]) +
+                day.tasks.map((task) => new TaskRow(task)).toList()) +
+        List.generate(5, (_) => ListTile());
     return ListView.builder(
       padding: const EdgeInsets.all(0.0),
       itemCount: rows.length,
@@ -47,44 +47,46 @@ class DayRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      highlightColor: Theme.of(context).accentColor,
+      splashFactory: InkSplash.splashFactory,
       onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DayPage(day)),
-              );
-            },
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DayPage(day)),
+        );
+      },
       child: Row(
-      children: <Widget>[
-        Container(
-          constraints: BoxConstraints.expand(
-            height: 56.0,
-            width: 10.0,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
-          child: Text(
-            day.dateName(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
+        children: <Widget>[
+          Container(
+            constraints: BoxConstraints.expand(
+              height: 56.0,
+              width: 10.0,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).accentColor,
             ),
           ),
-        ),
-        Spacer(),
-        Padding(
-          padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-          child: Row(
-            children: <Widget>[
-              scoreIcon(day.score()),
-            ],
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
+            child: Text(
+              day.dateName(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
+            ),
           ),
-        ),
-      ],
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
+            child: Row(
+              children: <Widget>[
+                scoreIcon(day.score()),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -108,7 +110,7 @@ class TaskRowState extends State<TaskRow> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        rectangle(height:56.0, width:10.0, color: stressColor(_task.stress)),
+        rectangle(height: 56.0, width: 10.0, color: stressColor(_task.stress)),
         Padding(
           padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
           child: Text(

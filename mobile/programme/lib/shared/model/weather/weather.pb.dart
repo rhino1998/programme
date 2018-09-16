@@ -4,6 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
+import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -89,7 +90,6 @@ class Main extends $pb.GeneratedMessage {
     ..a<double>(5, 'seaLevel', $pb.PbFieldType.OD)
     ..a<double>(6, 'groundLevel', $pb.PbFieldType.OD)
     ..aInt64(7, 'humidity')
-    ..aInt64(8, 'tempKf')
     ..hasRequiredFields = false
   ;
 
@@ -141,11 +141,6 @@ class Main extends $pb.GeneratedMessage {
   set humidity(Int64 v) { $_setInt64(6, v); }
   bool hasHumidity() => $_has(6);
   void clearHumidity() => clearField(7);
-
-  Int64 get tempKf => $_getI64(7);
-  set tempKf(Int64 v) { $_setInt64(7, v); }
-  bool hasTempKf() => $_has(7);
-  void clearTempKf() => clearField(8);
 }
 
 class Weather extends $pb.GeneratedMessage {
@@ -456,5 +451,15 @@ class Forecast extends $pb.GeneratedMessage {
   set city(City v) { setField(5, v); }
   bool hasCity() => $_has(4);
   void clearCity() => clearField(5);
+}
+
+class WeatherAPIApi {
+  $pb.RpcClient _client;
+  WeatherAPIApi(this._client);
+
+  Future<Forecast> getForecast($pb.ClientContext ctx, Coord request) {
+    var emptyResponse = new Forecast();
+    return _client.invoke<Forecast>(ctx, 'WeatherAPI', 'GetForecast', request, emptyResponse);
+  }
 }
 

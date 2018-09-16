@@ -17,3 +17,9 @@ protoc shared/model/weather/weather.proto \
     --gogoslick_out=plugins=grpc:../../../ \
     --dart_out=mobile/programme/lib \
     -I.
+
+echo "Generating mobile"
+protoc shared/model/mobile/mobile.proto \
+	--gogoslick_out=plugins=grpc:../../../ \
+	--dart_out=mobile/programme/lib \
+	-I.

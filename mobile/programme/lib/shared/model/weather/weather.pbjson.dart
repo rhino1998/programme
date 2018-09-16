@@ -31,7 +31,6 @@ const Main$json = const {
     const {'1': 'sea_level', '3': 5, '4': 1, '5': 1, '10': 'seaLevel'},
     const {'1': 'ground_level', '3': 6, '4': 1, '5': 1, '10': 'groundLevel'},
     const {'1': 'humidity', '3': 7, '4': 1, '5': 3, '10': 'humidity'},
-    const {'1': 'temp_kf', '3': 8, '4': 1, '5': 3, '10': 'tempKf'},
   ],
 };
 
@@ -107,5 +106,25 @@ const Forecast$json = const {
     const {'1': 'list', '3': 4, '4': 3, '5': 11, '6': '.shared.model.weather.List', '10': 'list'},
     const {'1': 'city', '3': 5, '4': 1, '5': 11, '6': '.shared.model.weather.City', '10': 'city'},
   ],
+};
+
+const WeatherAPI$json = const {
+  '1': 'WeatherAPI',
+  '2': const [
+    const {'1': 'GetForecast', '2': '.shared.model.weather.Coord', '3': '.shared.model.weather.Forecast'},
+  ],
+};
+
+const WeatherAPI$messageJson = const {
+  '.shared.model.weather.Coord': Coord$json,
+  '.shared.model.weather.Forecast': Forecast$json,
+  '.shared.model.weather.List': List_$json,
+  '.shared.model.weather.Main': Main$json,
+  '.shared.model.weather.Weather': Weather$json,
+  '.shared.model.weather.Clouds': Clouds$json,
+  '.shared.model.weather.Wind': Wind$json,
+  '.shared.model.weather.Rain': Rain$json,
+  '.shared.model.weather.Sys': Sys$json,
+  '.shared.model.weather.City': City$json,
 };
 

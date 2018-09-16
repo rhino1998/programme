@@ -25,6 +25,10 @@ dependencies:
   fixnum: ^0.10.8
   protobuf: ^0.10.2
   collection: ^1.14.11
+  flutter_duration_picker: "^1.0.0"
+  geolocator: '^1.7.0'
+  android_intent: ^0.2.1
+  card_settings: ^1.2.0
 
 
 dev_dependencies:

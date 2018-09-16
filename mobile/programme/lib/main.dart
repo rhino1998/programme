@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'task.dart';
+import 'new_task.dart';
 
 import "shared/ui/floating.dart";
 import "shared/ui/google.dart";
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
           title: TextStyle(
             color: Colors.black,
           ),
+          button: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -42,17 +46,17 @@ class TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.menu),
-          color: Theme.of(context).primaryIconTheme.color,
-          tooltip: 'Menu',
-          onPressed: () => null,
-        ),
+        // leading: new IconButton(
+        //   icon: new Icon(Icons.menu),
+        //   color: Theme.of(context).primaryIconTheme.color,
+        //   tooltip: 'Menu',
+        //   onPressed: () => null,
+        // ),
         title: Text("programme", style: Theme.of(context).textTheme.title),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: new TaskList(),
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: newTaskButton(context, DateTime.now()),
     );
   }
 }

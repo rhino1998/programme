@@ -66,6 +66,8 @@ class Task extends $pb.GeneratedMessage {
     ..aOS(3, 'description')
     ..aInt64(4, 'duration')
     ..aInt64(5, 'stress')
+    ..aOB(8, 'deadlineNull')
+    ..aInt64(9, 'deadlineValue')
     ..aOB(10, 'startNull')
     ..aInt64(11, 'startValue')
     ..aOB(12, 'travelMethodNull')
@@ -114,34 +116,44 @@ class Task extends $pb.GeneratedMessage {
   bool hasStress() => $_has(4);
   void clearStress() => clearField(5);
 
-  bool get startNull => $_get(5, false);
-  set startNull(bool v) { $_setBool(5, v); }
-  bool hasStartNull() => $_has(5);
+  bool get deadlineNull => $_get(5, false);
+  set deadlineNull(bool v) { $_setBool(5, v); }
+  bool hasDeadlineNull() => $_has(5);
+  void clearDeadlineNull() => clearField(8);
+
+  Int64 get deadlineValue => $_getI64(6);
+  set deadlineValue(Int64 v) { $_setInt64(6, v); }
+  bool hasDeadlineValue() => $_has(6);
+  void clearDeadlineValue() => clearField(9);
+
+  bool get startNull => $_get(7, false);
+  set startNull(bool v) { $_setBool(7, v); }
+  bool hasStartNull() => $_has(7);
   void clearStartNull() => clearField(10);
 
-  Int64 get startValue => $_getI64(6);
-  set startValue(Int64 v) { $_setInt64(6, v); }
-  bool hasStartValue() => $_has(6);
+  Int64 get startValue => $_getI64(8);
+  set startValue(Int64 v) { $_setInt64(8, v); }
+  bool hasStartValue() => $_has(8);
   void clearStartValue() => clearField(11);
 
-  bool get travelMethodNull => $_get(7, false);
-  set travelMethodNull(bool v) { $_setBool(7, v); }
-  bool hasTravelMethodNull() => $_has(7);
+  bool get travelMethodNull => $_get(9, false);
+  set travelMethodNull(bool v) { $_setBool(9, v); }
+  bool hasTravelMethodNull() => $_has(9);
   void clearTravelMethodNull() => clearField(12);
 
-  $0.TravelMethod get travelMethodValue => $_getN(8);
+  $0.TravelMethod get travelMethodValue => $_getN(10);
   set travelMethodValue($0.TravelMethod v) { setField(13, v); }
-  bool hasTravelMethodValue() => $_has(8);
+  bool hasTravelMethodValue() => $_has(10);
   void clearTravelMethodValue() => clearField(13);
 
-  bool get locationNull => $_get(9, false);
-  set locationNull(bool v) { $_setBool(9, v); }
-  bool hasLocationNull() => $_has(9);
+  bool get locationNull => $_get(11, false);
+  set locationNull(bool v) { $_setBool(11, v); }
+  bool hasLocationNull() => $_has(11);
   void clearLocationNull() => clearField(14);
 
-  $0.Location get locationValue => $_getN(10);
+  $0.Location get locationValue => $_getN(12);
   set locationValue($0.Location v) { setField(15, v); }
-  bool hasLocationValue() => $_has(10);
+  bool hasLocationValue() => $_has(12);
   void clearLocationValue() => clearField(15);
 }
 

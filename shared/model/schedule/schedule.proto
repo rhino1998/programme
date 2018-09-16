@@ -34,6 +34,10 @@ message Task {
   int64 stress = 5;
 
   // Coord location = 4;
+  oneof deadline {
+    bool deadline_null = 8;
+    int64 deadline_value = 9;
+  }
 
   oneof start {
     bool start_null = 10;

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package shared.model.mobile;
+
+import "shared/model/schedule/schedule.proto";
+
+option go_package = "github.com/rhino1998/programme/backend/lib/model/mobile";
+
+service MobileGateway {
+  rpc AddTask(shared.model.schedule.NewTaskRequest)
+      returns(shared.model.schedule.Boolean);
+}

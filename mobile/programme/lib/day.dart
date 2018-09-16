@@ -4,9 +4,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'model.dart';
+import 'new_task.dart';
 import 'shared/assets.dart';
 import 'shared/ui/icon.dart';
-import 'shared/ui/floating.dart';
 import "shared/ui/google.dart";
 import 'shared/ui/timeformat.dart';
 
@@ -136,12 +136,12 @@ class DayPageState extends State<DayPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.menu),
-          color: Theme.of(context).primaryIconTheme.color,
-          tooltip: 'Menu',
-          onPressed: () => null,
-        ),
+        // leading: new IconButton(
+        //   icon: new Icon(Icons.menu),
+        //   color: Theme.of(context).primaryIconTheme.color,
+        //   tooltip: 'Menu',
+        //   onPressed: () => null,
+        // ),
         title: Text(_day.dateName(), style: Theme.of(context).textTheme.title),
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -157,7 +157,7 @@ class DayPageState extends State<DayPage> {
           return rows[i];
         },
       ),
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: newTaskButton(context, _day.startTime),
     );
   }
 }
@@ -318,7 +318,7 @@ class TaskSchedule extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
             child: Text(
-              "R",
+              current.description,
               style: TextStyle(
                 color: Theme.of(context).textTheme.body2.color,
                 fontSize: 18.0,
@@ -336,7 +336,7 @@ class TaskSchedule extends StatelessWidget {
     );
   }
 
-  Widget _travelTask(context) {
+  Widget _travelTask(context, travel) {
     var block =
         rectangle(width: 7.0, height: 7.0, color: stressColor(current.stress));
 
@@ -383,8 +383,75 @@ class TaskSchedule extends StatelessWidget {
           flex: 3,
           child: Padding(
             padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
+            child: Row(
+              children: [
+                travel.travelMethodIcon(),
+                Text(
+                  "R",
+                  style: labelStyle,
+                ),
+                Spacer(flex:7),
+              ],
+            ),
+          ),
+        ),
+        rectangle(
+            width: 56.0,
+            height: 56.0,
+            color: stressColor(current.stress),
+            child: Center(
+                child: Text(current.stress.toString(), style: blockStyle))),
+      ],
+    );
+  }
+
+  Widget _freeTask(context) {
+    var block =
+        rectangle(width: 7.0, height: 7.0, color: stressColor(current.stress));
+
+    var dur = current.end.difference(current.start);
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: Row(
+            children: [
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
+                child: Text(
+                  "(${dur.inHours}:${dur.inMinutes % 60})",
+                  style: labelStyle,
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          constraints: BoxConstraints.expand(
+            height: 56.0,
+            width: 14.0,
+          ),
+          child: Center(
+            child: Column(children: [
+              halfnoblock,
+              rectangle(
+                  width: 14.0,
+                  height: 49.0,
+                  color: GoogleColors.blue,
+                  radius: BorderRadius.all(Radius.circular(7.0))),
+              halfnoblock,
+            ]),
+          ),
+        ),
+        Spacer(),
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
             child: Text(
-              "R",
+              "",
               style: labelStyle,
             ),
           ),
@@ -409,8 +476,12 @@ class TaskSchedule extends StatelessWidget {
       return _endTask(context);
     }
 
-    if (current.travel) {
-      return _travelTask(context);
+    if (current is TravelTask) {
+      return _travelTask(context, current as TravelTask);
+    }
+
+    if (current is FreeTask) {
+      return _freeTask(context);
     }
 
     return _task(context);
