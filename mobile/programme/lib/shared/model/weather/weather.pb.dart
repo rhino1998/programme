@@ -215,7 +215,7 @@ class Wind extends $pb.GeneratedMessage {
 
 class Rain extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Rain', package: const $pb.PackageName('shared.model.weather'))
-    ..aInt64(1, 'threeHours')
+    ..a<double>(1, 'threeHours', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -233,15 +233,15 @@ class Rain extends $pb.GeneratedMessage {
     if (v is! Rain) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  Int64 get threeHours => $_getI64(0);
-  set threeHours(Int64 v) { $_setInt64(0, v); }
+  double get threeHours => $_getN(0);
+  set threeHours(double v) { $_setDouble(0, v); }
   bool hasThreeHours() => $_has(0);
   void clearThreeHours() => clearField(1);
 }
 
 class Snow extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Snow', package: const $pb.PackageName('shared.model.weather'))
-    ..aInt64(1, 'threeHours')
+    ..a<double>(1, 'threeHours', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -259,8 +259,8 @@ class Snow extends $pb.GeneratedMessage {
     if (v is! Snow) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  Int64 get threeHours => $_getI64(0);
-  set threeHours(Int64 v) { $_setInt64(0, v); }
+  double get threeHours => $_getN(0);
+  set threeHours(double v) { $_setDouble(0, v); }
   bool hasThreeHours() => $_has(0);
   void clearThreeHours() => clearField(1);
 }
@@ -300,7 +300,6 @@ class List_ extends $pb.GeneratedMessage {
     ..a<Wind>(5, 'wind', $pb.PbFieldType.OM, Wind.getDefault, Wind.create)
     ..a<Rain>(6, 'rain', $pb.PbFieldType.OM, Rain.getDefault, Rain.create)
     ..a<Sys>(7, 'sys', $pb.PbFieldType.OM, Sys.getDefault, Sys.create)
-    ..aOS(8, 'dtTxt')
     ..hasRequiredFields = false
   ;
 
@@ -349,11 +348,6 @@ class List_ extends $pb.GeneratedMessage {
   set sys(Sys v) { setField(7, v); }
   bool hasSys() => $_has(6);
   void clearSys() => clearField(7);
-
-  String get dtTxt => $_getS(7, '');
-  set dtTxt(String v) { $_setString(7, v); }
-  bool hasDtTxt() => $_has(7);
-  void clearDtTxt() => clearField(8);
 }
 
 class City extends $pb.GeneratedMessage {

@@ -54,14 +54,14 @@ const Wind$json = const {
 const Rain$json = const {
   '1': 'Rain',
   '2': const [
-    const {'1': 'three_hours', '3': 1, '4': 1, '5': 3, '10': 'threeHours'},
+    const {'1': 'three_hours', '3': 1, '4': 1, '5': 1, '10': 'threeHours'},
   ],
 };
 
 const Snow$json = const {
   '1': 'Snow',
   '2': const [
-    const {'1': 'three_hours', '3': 1, '4': 1, '5': 3, '10': 'threeHours'},
+    const {'1': 'three_hours', '3': 1, '4': 1, '5': 1, '10': 'threeHours'},
   ],
 };
 
@@ -82,7 +82,6 @@ const List_$json = const {
     const {'1': 'wind', '3': 5, '4': 1, '5': 11, '6': '.shared.model.weather.Wind', '10': 'wind'},
     const {'1': 'rain', '3': 6, '4': 1, '5': 11, '6': '.shared.model.weather.Rain', '10': 'rain'},
     const {'1': 'sys', '3': 7, '4': 1, '5': 11, '6': '.shared.model.weather.Sys', '10': 'sys'},
-    const {'1': 'dt_txt', '3': 8, '4': 1, '5': 9, '10': 'dtTxt'},
   ],
 };
 
