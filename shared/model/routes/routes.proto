@@ -5,7 +5,7 @@ package shared.model.routes;
 option go_package = "github.com/rhino1998/programme/backend/lib/model/routes";
 
 service RoutesAPI {
-  rpc CalcTravelTime (Trip) returns (Trips);
+  rpc CalcTravelTime (Locations) returns (Trips);
 }
 
 enum TravelMethod {
@@ -31,4 +31,9 @@ message Trip {
 
 message Trips {
   repeated Trip trips = 1;
+}
+
+message Locations {
+  repeated Location locations = 1;
+  TravelMethod method = 2;
 }
