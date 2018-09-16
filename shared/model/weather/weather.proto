@@ -45,11 +45,11 @@ message Wind {
 }
 
 message Rain {
-  int64 three_hours = 1; // Precipitation volume for last 3 hours (mm)
+  double three_hours = 1; // Precipitation volume for last 3 hours (mm)
 }
 
 message Snow {
-  int64 three_hours = 1; // Snow volume for last 3 hours (mm)
+  double three_hours = 1; // Snow volume for last 3 hours (mm)
 }
 
 message Clouds {
@@ -64,7 +64,6 @@ message List {
   Wind wind = 5;
   Rain rain = 6;
   Sys sys = 7;       // Only available in current forecast
-  string dt_txt = 8; // Date/time (UTC)
 }
 
 message City {
