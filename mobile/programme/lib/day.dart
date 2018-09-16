@@ -11,40 +11,50 @@ import 'shared/ui/icon.dart';
 import "shared/ui/google.dart";
 import 'shared/ui/timeformat.dart';
 
-class _WeatherRow extends StatefulWidget{
-    final Day _day;
+class _WeatherRow extends StatefulWidget {
+  final Day _day;
 
-   _WeatherRow(this._day);
+  _WeatherRow(this._day);
 
   @override
   _WeatherRowState createState() => new _WeatherRowState(_day);
 }
+
 class _WeatherRowState extends State<_WeatherRow> {
   final Day _day;
 
   String msg = "Waiting on weather data";
+  Widget icon = weatherIcon(0, radius: 14.0);
 
-  _WeatherRowState(this._day){
-    getWeather().then((val){
-      setState(()=>msg = val.toString());
-    }).catchError((err){ setState(()=>msg=err.toString());});
+  _WeatherRowState(this._day) {
+    getWeather().then((val) {
+      var h = val.list[0].weather[0];
+
+      var g = h.description;
+      setState(() {
+        icon = weatherIcon(h.id.toInt(), radius:14.0);
+        msg = g[0].toUpperCase() + g.substring(1);
+      });
+    }).catchError((err) {
+      setState(() {
+        msg = err.toString();
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        scoreIcon(5000, radius: 14.0),
+        icon,
         Container(
           padding: EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-          child: Text(msg,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize:4.0)),
+          child: Text(msg, style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         Spacer(),
       ],
     );
   }
-
 }
 
 class DayPage extends StatefulWidget {
@@ -138,7 +148,7 @@ class DayPageState extends State<DayPage> {
                 Spacer(),
                 _chipContainer(
                   blurChip(
-                     _WeatherRow(_day),
+                    _WeatherRow(_day),
                     radius: 14.0,
                   ),
                 ),
@@ -427,7 +437,7 @@ class TaskSchedule extends StatelessWidget {
                   "R",
                   style: labelStyle,
                 ),
-                Spacer(flex:7),
+                Spacer(flex: 7),
               ],
             ),
           ),

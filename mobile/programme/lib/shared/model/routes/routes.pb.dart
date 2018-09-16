@@ -4,7 +4,6 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -121,7 +120,7 @@ class Trip extends $pb.GeneratedMessage {
 }
 
 class Trips extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Trips', package: const $pb.PackageName('shared.model.routes'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Trips')
     ..pp<Trip>(1, 'trips', $pb.PbFieldType.PM, Trip.$checkItem, Trip.create)
     ..hasRequiredFields = false
   ;
@@ -130,26 +129,15 @@ class Trips extends $pb.GeneratedMessage {
   Trips.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Trips.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Trips clone() => new Trips()..mergeFromMessage(this);
-  Trips copyWith(void Function(Trips) updates) => super.copyWith((message) => updates(message as Trips));
   $pb.BuilderInfo get info_ => _i;
   static Trips create() => new Trips();
   static $pb.PbList<Trips> createRepeated() => new $pb.PbList<Trips>();
-  static Trips getDefault() => _defaultInstance ??= create()..freeze();
+  static Trips getDefault() => _defaultInstance ??= create();
   static Trips _defaultInstance;
   static void $checkItem(Trips v) {
     if (v is! Trips) $pb.checkItemFailed(v, _i.messageName);
   }
 
   List<Trip> get trips => $_getList(0);
-}
-
-class RoutesAPIApi {
-  $pb.RpcClient _client;
-  RoutesAPIApi(this._client);
-
-  Future<Trips> calcTravelTime($pb.ClientContext ctx, Trip request) {
-    var emptyResponse = new Trips();
-    return _client.invoke<Trips>(ctx, 'RoutesAPI', 'CalcTravelTime', request, emptyResponse);
-  }
 }
 

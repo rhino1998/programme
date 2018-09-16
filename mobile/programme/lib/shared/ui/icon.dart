@@ -85,3 +85,53 @@ Color stressColor(int stress) {
   }
   return GoogleColors.red;
 }
+
+Widget weatherIcon(int id, {double radius}) {
+  switch (id ~/100) {
+    case (2):
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: GoogleColors.red,
+        child: Icon(
+          MdiIcons.weatherLightningRainy,
+          color: Colors.white,
+        ),
+      );
+    case (3):
+    case (5):
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: GoogleColors.yellow,
+        child: Icon(
+          MdiIcons.weatherRainy,
+          color: Colors.white,
+        ),
+      );
+    case (6):
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: GoogleColors.red,
+        child: Icon(
+          MdiIcons.weatherSnowy,
+          color: Colors.white,
+        ),
+      );
+    case (8):
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: GoogleColors.green,
+        child: Icon(
+          MdiIcons.weatherSunny,
+          color: Colors.white,
+        ),
+      );
+  }
+  return CircleAvatar(
+    radius: radius,
+    backgroundColor: GoogleColors.blue,
+    child: Icon(
+      MdiIcons.calendarQuestion,
+      color: Colors.white,
+    ),
+  );
+}

@@ -48,17 +48,3 @@ const Trips$json = const {
   ],
 };
 
-const RoutesAPI$json = const {
-  '1': 'RoutesAPI',
-  '2': const [
-    const {'1': 'CalcTravelTime', '2': '.shared.model.routes.Trip', '3': '.shared.model.routes.Trips'},
-  ],
-};
-
-const RoutesAPI$messageJson = const {
-  '.shared.model.routes.Trip': Trip$json,
-  '.shared.model.routes.Location': Location$json,
-  '.shared.model.routes.Coords': Coords$json,
-  '.shared.model.routes.Trips': Trips$json,
-};
-
