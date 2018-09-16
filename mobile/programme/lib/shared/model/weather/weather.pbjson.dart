@@ -8,7 +8,7 @@ const Coord$json = const {
   '1': 'Coord',
   '2': const [
     const {'1': 'longitude', '3': 1, '4': 1, '5': 1, '10': 'longitude'},
-    const {'1': 'lattitude', '3': 2, '4': 1, '5': 1, '10': 'lattitude'},
+    const {'1': 'latitude', '3': 2, '4': 1, '5': 1, '10': 'latitude'},
   ],
 };
 
@@ -48,21 +48,20 @@ const Wind$json = const {
   '2': const [
     const {'1': 'speed', '3': 1, '4': 1, '5': 1, '10': 'speed'},
     const {'1': 'deg', '3': 2, '4': 1, '5': 1, '10': 'deg'},
-    const {'1': 'gust', '3': 3, '4': 1, '5': 1, '10': 'gust'},
   ],
 };
 
 const Rain$json = const {
   '1': 'Rain',
   '2': const [
-    const {'1': 'three_hours', '3': 1, '4': 1, '5': 3, '10': 'threeHours'},
+    const {'1': 'three_hours', '3': 1, '4': 1, '5': 1, '10': 'threeHours'},
   ],
 };
 
 const Snow$json = const {
   '1': 'Snow',
   '2': const [
-    const {'1': 'three_hours', '3': 1, '4': 1, '5': 3, '10': 'threeHours'},
+    const {'1': 'three_hours', '3': 1, '4': 1, '5': 1, '10': 'threeHours'},
   ],
 };
 
@@ -83,7 +82,6 @@ const List_$json = const {
     const {'1': 'wind', '3': 5, '4': 1, '5': 11, '6': '.shared.model.weather.Wind', '10': 'wind'},
     const {'1': 'rain', '3': 6, '4': 1, '5': 11, '6': '.shared.model.weather.Rain', '10': 'rain'},
     const {'1': 'sys', '3': 7, '4': 1, '5': 11, '6': '.shared.model.weather.Sys', '10': 'sys'},
-    const {'1': 'dt_txt', '3': 8, '4': 1, '5': 9, '10': 'dtTxt'},
   ],
 };
 
@@ -100,11 +98,8 @@ const City$json = const {
 const Forecast$json = const {
   '1': 'Forecast',
   '2': const [
-    const {'1': 'cod', '3': 1, '4': 1, '5': 3, '10': 'cod'},
-    const {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'cnt', '3': 3, '4': 1, '5': 3, '10': 'cnt'},
-    const {'1': 'list', '3': 4, '4': 3, '5': 11, '6': '.shared.model.weather.List', '10': 'list'},
-    const {'1': 'city', '3': 5, '4': 1, '5': 11, '6': '.shared.model.weather.City', '10': 'city'},
+    const {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.shared.model.weather.List', '10': 'list'},
+    const {'1': 'city', '3': 2, '4': 1, '5': 11, '6': '.shared.model.weather.City', '10': 'city'},
   ],
 };
 

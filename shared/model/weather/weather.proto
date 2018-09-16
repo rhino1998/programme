@@ -11,7 +11,7 @@ service WeatherAPI {
 // Geo location of city
 message Coord {
   double longitude = 1;
-  double lattitude = 2;
+  double latitude = 2;
 }
 
 message Sys {
@@ -42,15 +42,14 @@ message Weather {
 message Wind {
   double speed = 1; // Meters / Second
   double deg = 2;   // Meteorological degrees
-  double gust = 3;  // Meters / second
 }
 
 message Rain {
-  int64 three_hours = 1; // Precipitation volume for last 3 hours (mm)
+  double three_hours = 1; // Precipitation volume for last 3 hours (mm)
 }
 
 message Snow {
-  int64 three_hours = 1; // Snow volume for last 3 hours (mm)
+  double three_hours = 1; // Snow volume for last 3 hours (mm)
 }
 
 message Clouds {
@@ -65,7 +64,6 @@ message List {
   Wind wind = 5;
   Rain rain = 6;
   Sys sys = 7;       // Only available in current forecast
-  string dt_txt = 8; // Date/time (UTC)
 }
 
 message City {
@@ -76,9 +74,6 @@ message City {
 }
 
 message Forecast {
-  int64 cod = 1;          // Internal param
-  string message = 2;     // Internal param
-  int64 cnt = 3;          // Number of lines returned by API call
-  repeated List list = 4; // Most of the actual weather
-  City city = 5;
+  repeated List list = 1; // Most of the actual weather
+  City city = 2;
 }

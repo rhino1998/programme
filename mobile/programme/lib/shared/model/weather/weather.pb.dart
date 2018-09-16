@@ -14,7 +14,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class Coord extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Coord', package: const $pb.PackageName('shared.model.weather'))
     ..a<double>(1, 'longitude', $pb.PbFieldType.OD)
-    ..a<double>(2, 'lattitude', $pb.PbFieldType.OD)
+    ..a<double>(2, 'latitude', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -37,10 +37,10 @@ class Coord extends $pb.GeneratedMessage {
   bool hasLongitude() => $_has(0);
   void clearLongitude() => clearField(1);
 
-  double get lattitude => $_getN(1);
-  set lattitude(double v) { $_setDouble(1, v); }
-  bool hasLattitude() => $_has(1);
-  void clearLattitude() => clearField(2);
+  double get latitude => $_getN(1);
+  set latitude(double v) { $_setDouble(1, v); }
+  bool hasLatitude() => $_has(1);
+  void clearLatitude() => clearField(2);
 }
 
 class Sys extends $pb.GeneratedMessage {
@@ -185,7 +185,6 @@ class Wind extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Wind', package: const $pb.PackageName('shared.model.weather'))
     ..a<double>(1, 'speed', $pb.PbFieldType.OD)
     ..a<double>(2, 'deg', $pb.PbFieldType.OD)
-    ..a<double>(3, 'gust', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -212,16 +211,11 @@ class Wind extends $pb.GeneratedMessage {
   set deg(double v) { $_setDouble(1, v); }
   bool hasDeg() => $_has(1);
   void clearDeg() => clearField(2);
-
-  double get gust => $_getN(2);
-  set gust(double v) { $_setDouble(2, v); }
-  bool hasGust() => $_has(2);
-  void clearGust() => clearField(3);
 }
 
 class Rain extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Rain', package: const $pb.PackageName('shared.model.weather'))
-    ..aInt64(1, 'threeHours')
+    ..a<double>(1, 'threeHours', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -239,15 +233,15 @@ class Rain extends $pb.GeneratedMessage {
     if (v is! Rain) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  Int64 get threeHours => $_getI64(0);
-  set threeHours(Int64 v) { $_setInt64(0, v); }
+  double get threeHours => $_getN(0);
+  set threeHours(double v) { $_setDouble(0, v); }
   bool hasThreeHours() => $_has(0);
   void clearThreeHours() => clearField(1);
 }
 
 class Snow extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Snow', package: const $pb.PackageName('shared.model.weather'))
-    ..aInt64(1, 'threeHours')
+    ..a<double>(1, 'threeHours', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -265,8 +259,8 @@ class Snow extends $pb.GeneratedMessage {
     if (v is! Snow) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  Int64 get threeHours => $_getI64(0);
-  set threeHours(Int64 v) { $_setInt64(0, v); }
+  double get threeHours => $_getN(0);
+  set threeHours(double v) { $_setDouble(0, v); }
   bool hasThreeHours() => $_has(0);
   void clearThreeHours() => clearField(1);
 }
@@ -306,7 +300,6 @@ class List_ extends $pb.GeneratedMessage {
     ..a<Wind>(5, 'wind', $pb.PbFieldType.OM, Wind.getDefault, Wind.create)
     ..a<Rain>(6, 'rain', $pb.PbFieldType.OM, Rain.getDefault, Rain.create)
     ..a<Sys>(7, 'sys', $pb.PbFieldType.OM, Sys.getDefault, Sys.create)
-    ..aOS(8, 'dtTxt')
     ..hasRequiredFields = false
   ;
 
@@ -355,11 +348,6 @@ class List_ extends $pb.GeneratedMessage {
   set sys(Sys v) { setField(7, v); }
   bool hasSys() => $_has(6);
   void clearSys() => clearField(7);
-
-  String get dtTxt => $_getS(7, '');
-  set dtTxt(String v) { $_setString(7, v); }
-  bool hasDtTxt() => $_has(7);
-  void clearDtTxt() => clearField(8);
 }
 
 class City extends $pb.GeneratedMessage {
@@ -408,11 +396,8 @@ class City extends $pb.GeneratedMessage {
 
 class Forecast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Forecast', package: const $pb.PackageName('shared.model.weather'))
-    ..aInt64(1, 'cod')
-    ..aOS(2, 'message')
-    ..aInt64(3, 'cnt')
-    ..pp<List_>(4, 'list', $pb.PbFieldType.PM, List_.$checkItem, List_.create)
-    ..a<City>(5, 'city', $pb.PbFieldType.OM, City.getDefault, City.create)
+    ..pp<List_>(1, 'list', $pb.PbFieldType.PM, List_.$checkItem, List_.create)
+    ..a<City>(2, 'city', $pb.PbFieldType.OM, City.getDefault, City.create)
     ..hasRequiredFields = false
   ;
 
@@ -430,27 +415,22 @@ class Forecast extends $pb.GeneratedMessage {
     if (v is! Forecast) $pb.checkItemFailed(v, _i.messageName);
   }
 
-  Int64 get cod => $_getI64(0);
-  set cod(Int64 v) { $_setInt64(0, v); }
-  bool hasCod() => $_has(0);
-  void clearCod() => clearField(1);
+  List<List_> get list => $_getList(0);
 
-  String get message => $_getS(1, '');
-  set message(String v) { $_setString(1, v); }
-  bool hasMessage() => $_has(1);
-  void clearMessage() => clearField(2);
+  City get city => $_getN(1);
+  set city(City v) { setField(2, v); }
+  bool hasCity() => $_has(1);
+  void clearCity() => clearField(2);
+}
 
-  Int64 get cnt => $_getI64(2);
-  set cnt(Int64 v) { $_setInt64(2, v); }
-  bool hasCnt() => $_has(2);
-  void clearCnt() => clearField(3);
+class WeatherAPIApi {
+  $pb.RpcClient _client;
+  WeatherAPIApi(this._client);
 
-  List<List_> get list => $_getList(3);
-
-  City get city => $_getN(4);
-  set city(City v) { setField(5, v); }
-  bool hasCity() => $_has(4);
-  void clearCity() => clearField(5);
+  Future<Forecast> getForecast($pb.ClientContext ctx, Coord request) {
+    var emptyResponse = new Forecast();
+    return _client.invoke<Forecast>(ctx, 'WeatherAPI', 'GetForecast', request, emptyResponse);
+  }
 }
 
 class WeatherAPIApi {
