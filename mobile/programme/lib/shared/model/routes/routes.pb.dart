@@ -16,7 +16,7 @@ import 'routes.pbenum.dart';
 export 'routes.pbenum.dart';
 
 class Coords extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Coords', package: const $pb.PackageName('shared.model.routes'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Coords')
     ..a<double>(1, 'latitude', $pb.PbFieldType.OD)
     ..a<double>(2, 'longitude', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
@@ -26,11 +26,10 @@ class Coords extends $pb.GeneratedMessage {
   Coords.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Coords.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Coords clone() => new Coords()..mergeFromMessage(this);
-  Coords copyWith(void Function(Coords) updates) => super.copyWith((message) => updates(message as Coords));
   $pb.BuilderInfo get info_ => _i;
   static Coords create() => new Coords();
   static $pb.PbList<Coords> createRepeated() => new $pb.PbList<Coords>();
-  static Coords getDefault() => _defaultInstance ??= create()..freeze();
+  static Coords getDefault() => _defaultInstance ??= create();
   static Coords _defaultInstance;
   static void $checkItem(Coords v) {
     if (v is! Coords) $pb.checkItemFailed(v, _i.messageName);
@@ -48,7 +47,7 @@ class Coords extends $pb.GeneratedMessage {
 }
 
 class Location extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Location', package: const $pb.PackageName('shared.model.routes'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Location')
     ..aOS(1, 'name')
     ..a<Coords>(2, 'coords', $pb.PbFieldType.OM, Coords.getDefault, Coords.create)
     ..hasRequiredFields = false
@@ -58,11 +57,10 @@ class Location extends $pb.GeneratedMessage {
   Location.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Location.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Location clone() => new Location()..mergeFromMessage(this);
-  Location copyWith(void Function(Location) updates) => super.copyWith((message) => updates(message as Location));
   $pb.BuilderInfo get info_ => _i;
   static Location create() => new Location();
   static $pb.PbList<Location> createRepeated() => new $pb.PbList<Location>();
-  static Location getDefault() => _defaultInstance ??= create()..freeze();
+  static Location getDefault() => _defaultInstance ??= create();
   static Location _defaultInstance;
   static void $checkItem(Location v) {
     if (v is! Location) $pb.checkItemFailed(v, _i.messageName);
@@ -80,7 +78,7 @@ class Location extends $pb.GeneratedMessage {
 }
 
 class Trip extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Trip', package: const $pb.PackageName('shared.model.routes'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Trip')
     ..a<Location>(1, 'start', $pb.PbFieldType.OM, Location.getDefault, Location.create)
     ..a<Location>(2, 'end', $pb.PbFieldType.OM, Location.getDefault, Location.create)
     ..e<TravelMethod>(3, 'method', $pb.PbFieldType.OE, TravelMethod.Unknown, TravelMethod.valueOf, TravelMethod.values)
@@ -92,11 +90,10 @@ class Trip extends $pb.GeneratedMessage {
   Trip.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Trip.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Trip clone() => new Trip()..mergeFromMessage(this);
-  Trip copyWith(void Function(Trip) updates) => super.copyWith((message) => updates(message as Trip));
   $pb.BuilderInfo get info_ => _i;
   static Trip create() => new Trip();
   static $pb.PbList<Trip> createRepeated() => new $pb.PbList<Trip>();
-  static Trip getDefault() => _defaultInstance ??= create()..freeze();
+  static Trip getDefault() => _defaultInstance ??= create();
   static Trip _defaultInstance;
   static void $checkItem(Trip v) {
     if (v is! Trip) $pb.checkItemFailed(v, _i.messageName);

@@ -4,8 +4,6 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import '../routes/routes.pbjson.dart' as $0;
-
 const TaskType$json = const {
   '1': 'TaskType',
   '2': const [
@@ -70,20 +68,5 @@ const Boolean$json = const {
   '2': const [
     const {'1': 'boolean', '3': 1, '4': 1, '5': 8, '10': 'boolean'},
   ],
-};
-
-const TaskManager$json = const {
-  '1': 'TaskManager',
-  '2': const [
-    const {'1': 'AddTask', '2': '.shared.model.schedule.NewTaskRequest', '3': '.shared.model.schedule.Boolean'},
-  ],
-};
-
-const TaskManager$messageJson = const {
-  '.shared.model.schedule.NewTaskRequest': NewTaskRequest$json,
-  '.shared.model.schedule.Task': Task$json,
-  '.shared.model.routes.Location': $0.Location$json,
-  '.shared.model.routes.Coords': $0.Coords$json,
-  '.shared.model.schedule.Boolean': Boolean$json,
 };
 

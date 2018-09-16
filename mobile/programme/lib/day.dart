@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'weather.dart';
 
 import 'model.dart';
 import 'new_task.dart';
@@ -9,6 +10,42 @@ import 'shared/assets.dart';
 import 'shared/ui/icon.dart';
 import "shared/ui/google.dart";
 import 'shared/ui/timeformat.dart';
+
+class _WeatherRow extends StatefulWidget{
+    final Day _day;
+
+   _WeatherRow(this._day);
+
+  @override
+  _WeatherRowState createState() => new _WeatherRowState(_day);
+}
+class _WeatherRowState extends State<_WeatherRow> {
+  final Day _day;
+
+  String msg = "Waiting on weather data";
+
+  _WeatherRowState(this._day){
+    getWeather().then((val){
+      setState(()=>msg = val.toString());
+    }).catchError((err){ setState(()=>msg=err.toString());});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        scoreIcon(5000, radius: 14.0),
+        Container(
+          padding: EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
+          child: Text(msg,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize:4.0)),
+        ),
+        Spacer(),
+      ],
+    );
+  }
+
+}
 
 class DayPage extends StatefulWidget {
   final Day _day;
@@ -101,7 +138,7 @@ class DayPageState extends State<DayPage> {
                 Spacer(),
                 _chipContainer(
                   blurChip(
-                    _weatherRow(),
+                     _WeatherRow(_day),
                     radius: 14.0,
                   ),
                 ),

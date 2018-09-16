@@ -4,7 +4,6 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import 'dart:async';
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, override;
 
@@ -19,7 +18,7 @@ import '../routes/routes.pbenum.dart' as $0;
 export 'schedule.pbenum.dart';
 
 class Day extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Day', package: const $pb.PackageName('shared.model.schedule'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Day')
     ..aInt64(1, 'datetime')
     ..pp<Task>(2, 'tasks', $pb.PbFieldType.PM, Task.$checkItem, Task.create)
     ..aOB(12, 'weatherNull')
@@ -31,11 +30,10 @@ class Day extends $pb.GeneratedMessage {
   Day.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Day.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Day clone() => new Day()..mergeFromMessage(this);
-  Day copyWith(void Function(Day) updates) => super.copyWith((message) => updates(message as Day));
   $pb.BuilderInfo get info_ => _i;
   static Day create() => new Day();
   static $pb.PbList<Day> createRepeated() => new $pb.PbList<Day>();
-  static Day getDefault() => _defaultInstance ??= create()..freeze();
+  static Day getDefault() => _defaultInstance ??= create();
   static Day _defaultInstance;
   static void $checkItem(Day v) {
     if (v is! Day) $pb.checkItemFailed(v, _i.messageName);
@@ -60,7 +58,7 @@ class Day extends $pb.GeneratedMessage {
 }
 
 class Task extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Task', package: const $pb.PackageName('shared.model.schedule'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Task')
     ..e<TaskType>(1, 'taskType', $pb.PbFieldType.OE, TaskType.Unknown, TaskType.valueOf, TaskType.values)
     ..aOS(2, 'name')
     ..aOS(3, 'description')
@@ -81,11 +79,10 @@ class Task extends $pb.GeneratedMessage {
   Task.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Task.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Task clone() => new Task()..mergeFromMessage(this);
-  Task copyWith(void Function(Task) updates) => super.copyWith((message) => updates(message as Task));
   $pb.BuilderInfo get info_ => _i;
   static Task create() => new Task();
   static $pb.PbList<Task> createRepeated() => new $pb.PbList<Task>();
-  static Task getDefault() => _defaultInstance ??= create()..freeze();
+  static Task getDefault() => _defaultInstance ??= create();
   static Task _defaultInstance;
   static void $checkItem(Task v) {
     if (v is! Task) $pb.checkItemFailed(v, _i.messageName);
@@ -158,7 +155,7 @@ class Task extends $pb.GeneratedMessage {
 }
 
 class NewTaskRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('NewTaskRequest', package: const $pb.PackageName('shared.model.schedule'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('NewTaskRequest')
     ..aOS(1, 'user')
     ..a<Task>(2, 'task', $pb.PbFieldType.OM, Task.getDefault, Task.create)
     ..hasRequiredFields = false
@@ -168,11 +165,10 @@ class NewTaskRequest extends $pb.GeneratedMessage {
   NewTaskRequest.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   NewTaskRequest.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   NewTaskRequest clone() => new NewTaskRequest()..mergeFromMessage(this);
-  NewTaskRequest copyWith(void Function(NewTaskRequest) updates) => super.copyWith((message) => updates(message as NewTaskRequest));
   $pb.BuilderInfo get info_ => _i;
   static NewTaskRequest create() => new NewTaskRequest();
   static $pb.PbList<NewTaskRequest> createRepeated() => new $pb.PbList<NewTaskRequest>();
-  static NewTaskRequest getDefault() => _defaultInstance ??= create()..freeze();
+  static NewTaskRequest getDefault() => _defaultInstance ??= create();
   static NewTaskRequest _defaultInstance;
   static void $checkItem(NewTaskRequest v) {
     if (v is! NewTaskRequest) $pb.checkItemFailed(v, _i.messageName);
@@ -190,7 +186,7 @@ class NewTaskRequest extends $pb.GeneratedMessage {
 }
 
 class Boolean extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Boolean', package: const $pb.PackageName('shared.model.schedule'))
+  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Boolean')
     ..aOB(1, 'boolean')
     ..hasRequiredFields = false
   ;
@@ -199,11 +195,10 @@ class Boolean extends $pb.GeneratedMessage {
   Boolean.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
   Boolean.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
   Boolean clone() => new Boolean()..mergeFromMessage(this);
-  Boolean copyWith(void Function(Boolean) updates) => super.copyWith((message) => updates(message as Boolean));
   $pb.BuilderInfo get info_ => _i;
   static Boolean create() => new Boolean();
   static $pb.PbList<Boolean> createRepeated() => new $pb.PbList<Boolean>();
-  static Boolean getDefault() => _defaultInstance ??= create()..freeze();
+  static Boolean getDefault() => _defaultInstance ??= create();
   static Boolean _defaultInstance;
   static void $checkItem(Boolean v) {
     if (v is! Boolean) $pb.checkItemFailed(v, _i.messageName);
@@ -213,15 +208,5 @@ class Boolean extends $pb.GeneratedMessage {
   set boolean(bool v) { $_setBool(0, v); }
   bool hasBoolean() => $_has(0);
   void clearBoolean() => clearField(1);
-}
-
-class TaskManagerApi {
-  $pb.RpcClient _client;
-  TaskManagerApi(this._client);
-
-  Future<Boolean> addTask($pb.ClientContext ctx, NewTaskRequest request) {
-    var emptyResponse = new Boolean();
-    return _client.invoke<Boolean>(ctx, 'TaskManager', 'AddTask', request, emptyResponse);
-  }
 }
 

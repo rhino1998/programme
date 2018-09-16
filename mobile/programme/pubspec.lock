@@ -151,6 +151,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
+  googleapis_auth:
+    dependency: transitive
+    description:
+      name: googleapis_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.5+2"
+  grpc:
+    dependency: "direct main"
+    description:
+      name: grpc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.4"
   html:
     dependency: transitive
     description:
@@ -165,6 +179,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.3+17"
+  http2:
+    dependency: transitive
+    description:
+      name: http2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.8+2"
   http_multi_server:
     dependency: transitive
     description:
@@ -318,7 +339,7 @@ packages:
       name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.2"
+    version: "0.9.1"
   pub_semver:
     dependency: transitive
     description:
@@ -472,5 +493,5 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.0.0-dev.68.0 <3.0.0"
+  dart: ">=2.0.0 <3.0.0"
   flutter: ">=0.1.4 <2.0.0"

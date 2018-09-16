@@ -24,6 +24,7 @@ func (s *Server) AddTask(ctx context.Context, taskReq *schedule.NewTaskRequest) 
 }
 
 func (s *Server) GetForecast(ctx context.Context, coords *routes.Coords) (*weather.Forecast, error) {
+	fmt.Println("YO")
 	return s.weatherAPI.GetForecast(ctx, coords)
 }
 

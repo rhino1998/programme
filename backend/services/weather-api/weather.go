@@ -19,6 +19,7 @@ type WeatherServer struct {
 }
 
 func (s *WeatherServer) GetForecast(ctx context.Context, c *routes.Coords) (*weather.Forecast, error) {
+	fmt.Println("YO")
 	w, err := owm.NewForecast("5", "C", "EN", apiKey)
 	if err != nil {
 		log.Fatalln(err)

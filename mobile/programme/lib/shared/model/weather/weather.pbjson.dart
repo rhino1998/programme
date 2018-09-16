@@ -4,8 +4,6 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-import '../routes/routes.pbjson.dart' as $0;
-
 const Sys$json = const {
   '1': 'Sys',
   '2': const [
@@ -95,25 +93,5 @@ const Forecast$json = const {
     const {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.shared.model.weather.List', '10': 'list'},
     const {'1': 'city', '3': 2, '4': 1, '5': 11, '6': '.shared.model.weather.City', '10': 'city'},
   ],
-};
-
-const WeatherAPI$json = const {
-  '1': 'WeatherAPI',
-  '2': const [
-    const {'1': 'GetForecast', '2': '.shared.model.routes.Coords', '3': '.shared.model.weather.Forecast'},
-  ],
-};
-
-const WeatherAPI$messageJson = const {
-  '.shared.model.routes.Coords': $0.Coords$json,
-  '.shared.model.weather.Forecast': Forecast$json,
-  '.shared.model.weather.List': List_$json,
-  '.shared.model.weather.Main': Main$json,
-  '.shared.model.weather.Weather': Weather$json,
-  '.shared.model.weather.Clouds': Clouds$json,
-  '.shared.model.weather.Wind': Wind$json,
-  '.shared.model.weather.Rain': Rain$json,
-  '.shared.model.weather.Sys': Sys$json,
-  '.shared.model.weather.City': City$json,
 };
 
