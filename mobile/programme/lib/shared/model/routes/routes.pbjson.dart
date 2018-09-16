@@ -41,3 +41,24 @@ const Trip$json = const {
   ],
 };
 
+const Trips$json = const {
+  '1': 'Trips',
+  '2': const [
+    const {'1': 'trips', '3': 1, '4': 3, '5': 11, '6': '.shared.model.routes.Trip', '10': 'trips'},
+  ],
+};
+
+const RoutesAPI$json = const {
+  '1': 'RoutesAPI',
+  '2': const [
+    const {'1': 'CalcTravelTime', '2': '.shared.model.routes.Trip', '3': '.shared.model.routes.Trips'},
+  ],
+};
+
+const RoutesAPI$messageJson = const {
+  '.shared.model.routes.Trip': Trip$json,
+  '.shared.model.routes.Location': Location$json,
+  '.shared.model.routes.Coords': Coords$json,
+  '.shared.model.routes.Trips': Trips$json,
+};
+
