@@ -351,7 +351,7 @@ class TaskSchedule extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
                 child: Text(
-                  "(${dur.inHours}:${dur.inMinutes % 60})",
+                  "(${dur.inHours}:${(dur.inMinutes % 60).toString().padLeft(2, '0')})",
                   style: labelStyle,
                   textAlign: TextAlign.right,
                 ),
@@ -420,7 +420,7 @@ class TaskSchedule extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
                 child: Text(
-                  "(${dur.inHours}:${dur.inMinutes % 60})",
+                  "(${dur.inHours}:${(dur.inMinutes % 60).toString().padLeft(2, '0')})",
                   style: labelStyle,
                   textAlign: TextAlign.right,
                 ),

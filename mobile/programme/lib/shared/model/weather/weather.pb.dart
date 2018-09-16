@@ -433,13 +433,3 @@ class WeatherAPIApi {
   }
 }
 
-class WeatherAPIApi {
-  $pb.RpcClient _client;
-  WeatherAPIApi(this._client);
-
-  Future<Forecast> getForecast($pb.ClientContext ctx, Coord request) {
-    var emptyResponse = new Forecast();
-    return _client.invoke<Forecast>(ctx, 'WeatherAPI', 'GetForecast', request, emptyResponse);
-  }
-}
-

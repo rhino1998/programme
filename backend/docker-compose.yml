@@ -31,3 +31,11 @@ services:
     restart: always
     links:
       - task_manager
+
+  weather_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.weather-api
+    restart: always
+    env_file:
+      - ../openweathermap.key
