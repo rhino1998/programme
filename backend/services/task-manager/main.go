@@ -54,6 +54,7 @@ func (s *Server) Setup() error {
 		duration INTERVAL NOT NULL,
 		stress INTEGER NOT NULL,
 		start TIMESTAMP NULL,
+		deadline TIMESTAMP NULL,
 		location_namem varchar(256) NULL,
 		location_lat DOUBLE PRECISION NULL,
 		location_lon DOUBLE PRECISION NULL,
@@ -77,27 +78,31 @@ func (s *Server) AddTask(ctx context.Context, taskReq *schedule.NewTaskRequest) 
 	var err error
 	switch task.GetTaskType() {
 	case schedule.Floating:
+		if task.GetDeadlineNull() {
+			return nil, fmt.Errorf("invalid task add request: floating task with no deadline")
+		}
+
 		if !task.GetLocationNull() {
 			location := task.GetLocationValue()
 			_, err = s.db.ExecContext(ctx, `
 				INSERT INTO tasks
 					(name, description, duration, stress,
 					 location_name, location_lat, location_lon,
-					 travel_method
+					 travel_method,deadline
 				 )
-				 VALUES ((?,?,?,?,?,?,?,?))
+				 VALUES ((?,?,?,?,?,?,?,?,?))
 			`,
 				task.Name, task.Description, task.Duration, task.Stress,
 				location.Name, location.Coords.Latitude, location.Coords.Longitude,
-				task.GetTravelMethod(),
+				task.GetTravelMethodValue(), task.GetDeadlineValue(),
 			)
 		} else {
 			_, err = s.db.ExecContext(ctx, `
 				INSERT INTO tasks
-					(name, description,duration, stress)
-					VALUES ((?,?,?,?))
+					(name, description,duration, stress,deadline)
+					VALUES ((?,?,?,?,?))
 				`,
-				task.Name, task.Description, task.Duration, task.Stress,
+				task.Name, task.Description, task.Duration, task.Stress, task.GetDeadlineValue(),
 			)
 		}
 	case schedule.Scheduled:

@@ -1,0 +1,8 @@
+FROM golang:1.11.0 as builder
+WORKDIR /root/go/github.com/rhino1998/programme/backend
+ADD go.mod .
+RUN go mod tidy
+ADD . .
+WORKDIR services/mobile-gateway
+RUN go build -o server
+CMD ["./server"]

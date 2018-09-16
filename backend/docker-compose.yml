@@ -23,3 +23,11 @@ services:
       - POSTGRES_DB=programme
     links:
       - postgres
+
+  mobile_gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.mobile-gateway
+    restart: always
+    links:
+      - task_manager
