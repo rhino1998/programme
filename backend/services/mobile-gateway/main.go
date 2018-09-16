@@ -9,25 +9,38 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/rhino1998/programme/backend/lib/model/mobile"
+	"github.com/rhino1998/programme/backend/lib/model/routes"
 	"github.com/rhino1998/programme/backend/lib/model/schedule"
+	"github.com/rhino1998/programme/backend/lib/model/weather"
 )
 
 type Server struct {
 	taskManager schedule.TaskManagerClient
+	weatherAPI  weather.WeatherAPIClient
 }
 
 func (s *Server) AddTask(ctx context.Context, taskReq *schedule.NewTaskRequest) (*schedule.Boolean, error) {
 	return s.taskManager.AddTask(ctx, taskReq)
 }
 
+func (s *Server) GetForecast(ctx context.Context, coords *routes.Coords) (*weather.Forecast, error) {
+	return s.weatherAPI.GetForecast(ctx, coords)
+}
+
 func main() {
-	conn, err := grpc.Dial("task_manager:8080", grpc.WithInsecure())
+	conn1, err := grpc.Dial("task_manager:8080", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	conn2, err := grpc.Dial("weather_api:8080", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	s := &Server{
-		taskManager: schedule.NewTaskManagerClient(conn),
+		taskManager: schedule.NewTaskManagerClient(conn1),
+		weatherAPI:  weather.NewWeatherAPIClient(conn2),
 	}
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":8080"))
