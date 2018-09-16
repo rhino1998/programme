@@ -2,16 +2,12 @@ syntax = "proto3";
 
 package shared.model.weather;
 
+import "shared/model/routes/routes.proto";
+
 option go_package = "github.com/rhino1998/programme/backend/lib/model/weather";
 
 service WeatherAPI {
-  rpc GetForecast (Coord) returns (Forecast);
-}
-
-// Geo location of city
-message Coord {
-  double longitude = 1;
-  double latitude = 2;
+  rpc GetForecast(shared.model.routes.Coords) returns(Forecast);
 }
 
 message Sys {
@@ -63,13 +59,13 @@ message List {
   Clouds clouds = 4;
   Wind wind = 5;
   Rain rain = 6;
-  Sys sys = 7;       // Only available in current forecast
+  Sys sys = 7; // Only available in current forecast
 }
 
 message City {
   int64 id = 1; // City id number
   string name = 2;
-  Coord coord = 3;
+  shared.model.routes.Coords coords = 3;
   string country = 4; // Country code: GB, JP, etc.
 }
 

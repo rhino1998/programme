@@ -4,13 +4,7 @@
 ///
 // ignore_for_file: non_constant_identifier_names,library_prefixes,unused_import
 
-const Coord$json = const {
-  '1': 'Coord',
-  '2': const [
-    const {'1': 'longitude', '3': 1, '4': 1, '5': 1, '10': 'longitude'},
-    const {'1': 'latitude', '3': 2, '4': 1, '5': 1, '10': 'latitude'},
-  ],
-};
+import '../routes/routes.pbjson.dart' as $0;
 
 const Sys$json = const {
   '1': 'Sys',
@@ -90,7 +84,7 @@ const City$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'coord', '3': 3, '4': 1, '5': 11, '6': '.shared.model.weather.Coord', '10': 'coord'},
+    const {'1': 'coords', '3': 3, '4': 1, '5': 11, '6': '.shared.model.routes.Coords', '10': 'coords'},
     const {'1': 'country', '3': 4, '4': 1, '5': 9, '10': 'country'},
   ],
 };
@@ -106,12 +100,12 @@ const Forecast$json = const {
 const WeatherAPI$json = const {
   '1': 'WeatherAPI',
   '2': const [
-    const {'1': 'GetForecast', '2': '.shared.model.weather.Coord', '3': '.shared.model.weather.Forecast'},
+    const {'1': 'GetForecast', '2': '.shared.model.routes.Coords', '3': '.shared.model.weather.Forecast'},
   ],
 };
 
 const WeatherAPI$messageJson = const {
-  '.shared.model.weather.Coord': Coord$json,
+  '.shared.model.routes.Coords': $0.Coords$json,
   '.shared.model.weather.Forecast': Forecast$json,
   '.shared.model.weather.List': List_$json,
   '.shared.model.weather.Main': Main$json,

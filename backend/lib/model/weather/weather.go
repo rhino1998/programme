@@ -2,6 +2,7 @@ package weather
 
 import (
 	owm "github.com/briandowns/openweathermap"
+	"github.com/rhino1998/programme/backend/lib/model/routes"
 )
 
 func ForecastFromOWM5(w *owm.Forecast5WeatherData) *Forecast {
@@ -35,13 +36,13 @@ func CityFromOWM(city *owm.City) *City {
 	return &City{
 		Id:      int64(city.ID),
 		Name:    city.Name,
-		Coord:   CoordFromOWM(&city.Coord),
+		Coords:  CoordsFromOWM(&city.Coord),
 		Country: city.Country,
 	}
 }
 
-func CoordFromOWM(coord *owm.Coordinates) *Coord {
-	return &Coord{
+func CoordsFromOWM(coord *owm.Coordinates) *routes.Coords {
+	return &routes.Coords{
 		Latitude:  coord.Latitude,
 		Longitude: coord.Longitude,
 	}

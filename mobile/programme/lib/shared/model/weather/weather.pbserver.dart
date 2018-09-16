@@ -8,17 +8,18 @@ import 'dart:async';
 
 import 'package:protobuf/protobuf.dart';
 
+import '../routes/routes.pb.dart' as $0;
 import 'weather.pb.dart';
 import 'weather.pbjson.dart';
 
 export 'weather.pb.dart';
 
 abstract class WeatherAPIServiceBase extends GeneratedService {
-  Future<Forecast> getForecast(ServerContext ctx, Coord request);
+  Future<Forecast> getForecast(ServerContext ctx, $0.Coords request);
 
   GeneratedMessage createRequest(String method) {
     switch (method) {
-      case 'GetForecast': return new Coord();
+      case 'GetForecast': return new $0.Coords();
       default: throw new ArgumentError('Unknown method: $method');
     }
   }

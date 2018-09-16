@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	owm "github.com/briandowns/openweathermap"
-	"github.com/rhino1998/programme/backend/lib/model/weather"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
+
+	owm "github.com/briandowns/openweathermap"
+	"github.com/rhino1998/programme/backend/lib/model/routes"
+	"github.com/rhino1998/programme/backend/lib/model/weather"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 )
 
 var apiKey = os.Getenv("OWM_API_KEY")
@@ -16,7 +18,7 @@ var apiKey = os.Getenv("OWM_API_KEY")
 type WeatherServer struct {
 }
 
-func (s *WeatherServer) GetForecast(ctx context.Context, c *weather.Coord) (*weather.Forecast, error) {
+func (s *WeatherServer) GetForecast(ctx context.Context, c *routes.Coords) (*weather.Forecast, error) {
 	w, err := owm.NewForecast("5", "C", "EN", apiKey)
 	if err != nil {
 		log.Fatalln(err)

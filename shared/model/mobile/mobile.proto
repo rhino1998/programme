@@ -3,10 +3,15 @@ syntax = "proto3";
 package shared.model.mobile;
 
 import "shared/model/schedule/schedule.proto";
+import "shared/model/routes/routes.proto";
+import "shared/model/weather/weather.proto";
 
 option go_package = "github.com/rhino1998/programme/backend/lib/model/mobile";
 
 service MobileGateway {
   rpc AddTask(shared.model.schedule.NewTaskRequest)
       returns(shared.model.schedule.Boolean);
+
+  rpc GetForecast(shared.model.routes.Coords)
+      returns(shared.model.weather.Forecast);
 }

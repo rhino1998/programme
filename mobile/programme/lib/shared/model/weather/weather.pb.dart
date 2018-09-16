@@ -11,37 +11,7 @@ import 'dart:core' show int, bool, double, String, List, override;
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Coord extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Coord', package: const $pb.PackageName('shared.model.weather'))
-    ..a<double>(1, 'longitude', $pb.PbFieldType.OD)
-    ..a<double>(2, 'latitude', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  Coord() : super();
-  Coord.fromBuffer(List<int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
-  Coord.fromJson(String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
-  Coord clone() => new Coord()..mergeFromMessage(this);
-  Coord copyWith(void Function(Coord) updates) => super.copyWith((message) => updates(message as Coord));
-  $pb.BuilderInfo get info_ => _i;
-  static Coord create() => new Coord();
-  static $pb.PbList<Coord> createRepeated() => new $pb.PbList<Coord>();
-  static Coord getDefault() => _defaultInstance ??= create()..freeze();
-  static Coord _defaultInstance;
-  static void $checkItem(Coord v) {
-    if (v is! Coord) $pb.checkItemFailed(v, _i.messageName);
-  }
-
-  double get longitude => $_getN(0);
-  set longitude(double v) { $_setDouble(0, v); }
-  bool hasLongitude() => $_has(0);
-  void clearLongitude() => clearField(1);
-
-  double get latitude => $_getN(1);
-  set latitude(double v) { $_setDouble(1, v); }
-  bool hasLatitude() => $_has(1);
-  void clearLatitude() => clearField(2);
-}
+import '../routes/routes.pb.dart' as $0;
 
 class Sys extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('Sys', package: const $pb.PackageName('shared.model.weather'))
@@ -354,7 +324,7 @@ class City extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = new $pb.BuilderInfo('City', package: const $pb.PackageName('shared.model.weather'))
     ..aInt64(1, 'id')
     ..aOS(2, 'name')
-    ..a<Coord>(3, 'coord', $pb.PbFieldType.OM, Coord.getDefault, Coord.create)
+    ..a<$0.Coords>(3, 'coords', $pb.PbFieldType.OM, $0.Coords.getDefault, $0.Coords.create)
     ..aOS(4, 'country')
     ..hasRequiredFields = false
   ;
@@ -383,10 +353,10 @@ class City extends $pb.GeneratedMessage {
   bool hasName() => $_has(1);
   void clearName() => clearField(2);
 
-  Coord get coord => $_getN(2);
-  set coord(Coord v) { setField(3, v); }
-  bool hasCoord() => $_has(2);
-  void clearCoord() => clearField(3);
+  $0.Coords get coords => $_getN(2);
+  set coords($0.Coords v) { setField(3, v); }
+  bool hasCoords() => $_has(2);
+  void clearCoords() => clearField(3);
 
   String get country => $_getS(3, '');
   set country(String v) { $_setString(3, v); }
@@ -427,7 +397,7 @@ class WeatherAPIApi {
   $pb.RpcClient _client;
   WeatherAPIApi(this._client);
 
-  Future<Forecast> getForecast($pb.ClientContext ctx, Coord request) {
+  Future<Forecast> getForecast($pb.ClientContext ctx, $0.Coords request) {
     var emptyResponse = new Forecast();
     return _client.invoke<Forecast>(ctx, 'WeatherAPI', 'GetForecast', request, emptyResponse);
   }
