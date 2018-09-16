@@ -5,28 +5,27 @@ import (
 )
 
 func ForecastFromOWM5(w *owm.Forecast5WeatherData) *Forecast {
-	forecast := Forecast{}
-	forecast.City = CityFromOWM(w.City)
+	forecast := &Forecast{}
+	forecast.City = CityFromOWM(&w.City)
 
 	for i := range w.List {
-		forecast.List = append(forecast.List, ListFromOWM5(w.List))
+		forecast.List = append(forecast.List, ListFromOWM5(&w.List[i]))
 	}
 
 	return forecast
 }
 
 func ListFromOWM5(l *owm.Forecast5WeatherList) *List {
-	list := List{
-		Dt:     l.Dt,
-		Main:   MainFromOWM(l.Main),
-		Clouds: CloudsFromOWM(l.Clouds),
-		Wind:   WindFromOWM(l.Wind),
-		Rain:   RainFromOWM(l.Rain),
-		DtTxt:  l.DtTxt,
+	list := &List{
+		Dt:     int64(l.Dt),
+		Main:   MainFromOWM(&l.Main),
+		Clouds: CloudsFromOWM(&l.Clouds),
+		Wind:   WindFromOWM(&l.Wind),
+		Rain:   RainFromOWM(&l.Rain),
 	}
 
 	for i := range l.Weather {
-		list.Weather = append(list.Weather, WeatherFromOWM(l.Weather[i]))
+		list.Weather = append(list.Weather, WeatherFromOWM(&l.Weather[i]))
 	}
 
 	return list
@@ -34,9 +33,9 @@ func ListFromOWM5(l *owm.Forecast5WeatherList) *List {
 
 func CityFromOWM(city *owm.City) *City {
 	return &City{
-		Id:      city.ID,
+		Id:      int64(city.ID),
 		Name:    city.Name,
-		Coord:   CoordFromOWM(city.coord),
+		Coord:   CoordFromOWM(&city.Coord),
 		Country: city.Country,
 	}
 }
@@ -56,13 +55,13 @@ func MainFromOWM(main *owm.Main) *Main {
 		Pressure:    main.Pressure,
 		SeaLevel:    main.SeaLevel,
 		GroundLevel: main.GrndLevel,
-		Humidity:    main.Humidity,
+		Humidity:    int64(main.Humidity),
 	}
 }
 
 func WeatherFromOWM(weather *owm.Weather) *Weather {
 	return &Weather{
-		Id:          weather.ID,
+		Id:          int64(weather.ID),
 		Main:        weather.Main,
 		Description: weather.Description,
 	}
@@ -71,8 +70,8 @@ func WeatherFromOWM(weather *owm.Weather) *Weather {
 func SysFromOWM(sys *owm.Sys) *Sys {
 	return &Sys{
 		Country: sys.Country,
-		Sunrise: sys.Sunrise,
-		Sunset:  sys.Sunset,
+		Sunrise: uint64(sys.Sunrise),
+		Sunset:  uint64(sys.Sunset),
 	}
 }
 
@@ -95,35 +94,44 @@ func SnowFromOWM(snow *owm.Snow) *Snow {
 	}
 }
 
-func ClooudsFromOWM(clouds *owm.Clouds) *Clouds {
+func CloudsFromOWM(clouds *owm.Clouds) *Clouds {
 	return &Clouds{
-		All: clouds.All,
+		All: int64(clouds.All),
 	}
 }
 
 func ForecastFromOWM16(w *owm.Forecast16WeatherData) *Forecast {
-	forecast := Forecast{}
-	forecast.City = CityFromOWM(w.City)
+	forecast := &Forecast{}
+	forecast.City = CityFromOWM(&w.City)
 
 	for i := range w.List {
-		forecast.List = append(forecast.List, ListFromOWM16(w.List))
+		forecast.List = append(forecast.List, ListFromOWM16(&w.List[i]))
 	}
 
 	return forecast
 }
 
 func ListFromOWM16(l *owm.Forecast16WeatherList) *List {
-	list := List{
-		Dt:     l.Dt,
-		Main:   MainFromOWM(l.Main),
-		Clouds: CloudsFromOWM(l.Clouds),
-		Wind:   WindFromOWM(l.Wind),
-		Rain:   RainFromOWM(l.Rain),
-		DtTxt:  l.DtTxt,
+	list := &List{
+		Dt: int64(l.Dt),
+		Main: &Main{
+			Temperature: l.Temp.Day,
+			TempMin:     l.Temp.Min,
+			TempMax:     l.Temp.Max,
+		},
+		Clouds: &Clouds{
+			All: int64(l.Clouds),
+		},
+		Wind: &Wind{
+			Speed: l.Speed,
+		},
+		Rain: &Rain{
+			ThreeHours: l.Rain,
+		},
 	}
 
 	for i := range l.Weather {
-		list.Weather = append(list.Weather, WeatherFromOWM(l.Weather[i]))
+		list.Weather = append(list.Weather, WeatherFromOWM(&l.Weather[i]))
 	}
 
 	return list

@@ -16,7 +16,7 @@ var apiKey = os.Getenv("OWM_API_KEY")
 type WeatherServer struct {
 }
 
-func (s *WeatherServer) GetForecast(ctx context.Context, c *Coord) *Forecast {
+func (s *WeatherServer) GetForecast(ctx context.Context, c *weather.Coord) (*weather.Forecast, error) {
 	w, err := owm.NewForecast("5", "C", "EN", apiKey)
 	if err != nil {
 		log.Fatalln(err)
@@ -41,5 +41,12 @@ func (s *WeatherServer) GetForecast(ctx context.Context, c *Coord) *Forecast {
 }
 
 func main() {
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", "8080"))
+	if err != nil {
+		fmt.Errorf("Error listening %v", err)
+	}
 
+	grpcServer := grpc.NewServer()
+	weather.RegisterWeatherAPIServer(grpcServer, &WeatherServer{})
+	grpcServer.Serve(lis)
 }
